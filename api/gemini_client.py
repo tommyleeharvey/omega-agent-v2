@@ -125,8 +125,16 @@ def chat_completion(messages, max_tokens=2048, tools=None, return_message=False)
     if converted_tools:
         payload["tools"] = converted_tools
 
+    # AQ.-prefix keys (Google's newer key format, rolling out through 2026)
+    # are unreliable via the ?key= query param and sometimes need the
+    # x-goog-api-key header instead - same key, different transport.
     url = GEMINI_API_URL.format(model=os.environ.get("GEMINI_MODEL", GEMINI_MODEL))
-    response = requests.post(url, params={"key": key}, json=payload, timeout=60)
+    response = requests.post(
+        url,
+        headers={"x-goog-api-key": key, "Content-Type": "application/json"},
+        json=payload,
+        timeout=60,
+    )
     if not response.ok:
         raise RuntimeError(f"Gemini request failed ({response.status_code}): {response.text[:300]}")
     normalized = _normalize_response(response.json())
