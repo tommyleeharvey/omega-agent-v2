@@ -333,6 +333,63 @@ async def _execute_tool_call(executor, tool_call):
     }
 
 
+def _verify_grounding(final_content, transcript):
+    """
+    Re-checks the model's final narrative against real transcript data.
+    Returns (grounded: bool, violations: list[str]).
+
+    Two checks, both driven by actual tool results — never by trusting
+    the model's own account of what it did:
+      1. Claimed file writes with no matching write_file tool_call in
+         the transcript (fabricated "I saved/created/wrote X" claims).
+      2. Any tool call that failed but whose failure isn't reflected
+         anywhere in the final narrative at all (silent failure hidden
+         from the user).
+    """
+    violations = []
+
+    executed_writes = set()
+    failed_steps = []
+    for entry in transcript:
+        if entry.get("role") != "tool":
+            continue
+        result = entry.get("result", {})
+        output = result.get("output", {}) if isinstance(result, dict) else {}
+        cmd = output.get("command", "") if isinstance(output, dict) else ""
+
+        tool_name = entry.get("tool_name") or entry.get("name")
+        if tool_name == "write_file" or "write_file" in cmd:
+            target = entry.get("target") or output.get("path")
+            if target:
+                executed_writes.add(target)
+
+        is_failure = (
+            result.get("success") is False
+            or result.get("accepted") is False
+        )
+        if is_failure:
+            failed_steps.append(entry.get("step"))
+
+    claim_re = re.compile(
+        r"(?:wrote|saved|created|updated) (?:the )?file[:\s]+([^\s,\.]+)",
+        re.IGNORECASE,
+    )
+    for claimed_path in claim_re.findall(final_content or ""):
+        if claimed_path not in executed_writes:
+            violations.append(
+                f"claimed to write \"{claimed_path}\" but no matching write_file "
+                "tool call exists in this session's transcript"
+            )
+
+    if failed_steps and "SYSTEM-VERIFIED FAILURES" not in (final_content or ""):
+        violations.append(
+            f"tool call(s) at step(s) {failed_steps} failed but the final "
+            "narrative does not acknowledge any failure"
+        )
+
+    return (len(violations) == 0, violations)
+
+
 SESSION_PATH = os.path.expanduser("~/.omega/logs/agent_session.json")
 os.makedirs(os.path.dirname(SESSION_PATH), exist_ok=True)
 
