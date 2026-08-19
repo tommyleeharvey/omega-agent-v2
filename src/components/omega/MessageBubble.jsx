@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
-import { ChevronDown, ChevronUp, ExternalLink, Brain, Clock, Copy, Check } from "lucide-react";
+import { ChevronDown, ChevronUp, ExternalLink, Brain, Clock, Copy, Check, Volume2 } from "lucide-react";
 
 function CodeBlock({ inline, className, children }) {
   const [copied, setCopied] = useState(false);
@@ -89,7 +89,7 @@ function MessageMarkdown({ content }) {
   );
 }
 
-export default function MessageBubble({ message, onOpenWorkspace }) {
+export default function MessageBubble({ message, onOpenWorkspace , onSpeak }) {
   const [showReasoning, setShowReasoning] = useState(false);
   const [showSources, setShowSources] = useState(false);
   const [msgCopied, setMsgCopied] = useState(false);
