@@ -350,6 +350,12 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
     executor = ActionExecutor(validator, analyzer)
 
     system = SYSTEM_PROMPT
+    try:
+        from agent.environment import get_environment_context
+        env_ctx = get_environment_context()
+        system += f" Current physical environment: {env_ctx}"
+    except Exception as _env_err:
+        logger.warning("environment context unavailable: %s", _env_err)
     if cwd_hint:
         system += f" The current working directory is {cwd_hint}."
 
