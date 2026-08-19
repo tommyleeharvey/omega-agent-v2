@@ -26,10 +26,10 @@ FAST_MODEL = "openai/gpt-oss-20b"  # llama-3.1-8b-instant deprecated Aug 16 2026
 # the next rather than blocking on a single model's TPD cap.
 MODEL_TIER_STACK = [
     "qwen/qwen3.6-27b",
-    "llama-3.3-70b-versatile",
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b",
-    "llama-3.1-8b-instant",
+    "groq/compound",
+    "groq/compound-mini",
 ]
 
 # Per-model TPM ceilings on our current Groq tier (on_demand). Used to
@@ -37,7 +37,7 @@ MODEL_TIER_STACK = [
 # burning a call to discover that. Conservative/approximate - Groq's
 # actual limit is the source of truth, this just avoids wasted round trips.
 MODEL_TPM_LIMITS = {
-    "llama-3.1-8b-instant": 6000,
+    "openai/gpt-oss-20b": 6000,
 }
 
 def _estimate_tokens(messages, tools=None):
