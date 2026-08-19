@@ -1,0 +1,199 @@
++ cd /data/data/com.termux/files/home/omega-agent-v2
++ echo '=== 1) _tier_start_index: where it'\''s defined, set, and reset ==='
+=== 1) _tier_start_index: where it's defined, set, and reset ===
++ grep -n _tier_start_index api/groq_client.py
+124:                     _tier_start_index=0):
+135:    if _tier_start_index == 0 and os.environ.get("ANTHROPIC_API_KEY"):
+147:    if _tier_start_index == 0 and os.environ.get("GEMINI_API_KEY"):
+159:    if _tier_start_index == 0 and os.environ.get("CEREBRAS_API_KEY"):
+171:    if _tier_start_index == 0 and os.environ.get("OPENROUTER_API_KEY"):
+202:    for idx in range(_tier_start_index, len(tier)):
++ echo ''
+
++ echo '=== 2) full chat_completion function body ==='
+=== 2) full chat_completion function body ===
++ sed -n 122,200p api/groq_client.py
+def chat_completion(messages, model=None, temperature=0.3, max_tokens=2048,
+                     tools=None, reasoning_effort=None, return_message=False,
+                     _tier_start_index=0):
+    """
+    return_message=False (default): returns just the content string.
+    return_message=True: returns the full message dict (includes tool_calls).
+
+    Walks MODEL_TIER_STACK on rate-limit (429). A per-model daily-quota hit
+    means retrying the SAME model is pointless until the quota window
+    resets, so on 429 we move to the next tier immediately.
+    """
+    import re
+
+    if _tier_start_index == 0 and os.environ.get("ANTHROPIC_API_KEY"):
+        try:
+            claude_result = claude_client.chat_completion(
+                messages,
+                max_tokens=max_tokens,
+                tools=tools,
+                return_message=True,
+            )
+            return claude_result if return_message else claude_result.get("content", "")
+        except Exception as exc:
+            logger.warning("Claude failed; trying Gemini: %s", exc)
+
+    if _tier_start_index == 0 and os.environ.get("GEMINI_API_KEY"):
+        try:
+            gemini_result = gemini_client.chat_completion(
+                messages,
+                max_tokens=max_tokens,
+                tools=tools,
+                return_message=True,
+            )
+            return gemini_result if return_message else gemini_result.get("content", "")
+        except Exception as exc:
+            logger.warning("Gemini failed; trying Cerebras: %s", exc)
+
+    if _tier_start_index == 0 and os.environ.get("CEREBRAS_API_KEY"):
+        try:
+            cerebras_result = cerebras_client.chat_completion(
+                messages,
+                max_tokens=max_tokens,
+                tools=tools,
+                return_message=True,
+            )
+            return cerebras_result if return_message else cerebras_result.get("content", "")
+        except Exception as exc:
+            logger.warning("Cerebras failed; trying OpenRouter: %s", exc)
+
+    if _tier_start_index == 0 and os.environ.get("OPENROUTER_API_KEY"):
+        try:
+            or_result = openrouter_client.chat_completion(
+                messages,
+                max_tokens=max_tokens,
+                tools=tools,
+                return_message=True,
+            )
+            return or_result if return_message else or_result.get("content", "")
+        except Exception as exc:
+            logger.warning("OpenRouter failed; falling through to Groq: %s", exc)
+
+    if not GROQ_API_KEY:
+        raise RuntimeError("No model provider is configured: set ANTHROPIC_API_KEY or GROQ_API_KEY")
+
+    has_images = any(
+        isinstance(message.get("content"), list)
+        and any(part.get("type") == "image_url" for part in message["content"] if isinstance(part, dict))
+        for message in messages
+        if isinstance(message, dict)
+    )
+    if has_images and model is None:
+        # Only qwen/qwen3.6-27b is vision-capable in this configured stack.
+        # Do not silently retry with text-only models and imply that an image was analyzed.
+        tier = ["qwen/qwen3.6-27b"]
+    else:
+        tier = MODEL_TIER_STACK if model is None else [model] + [
+            m for m in MODEL_TIER_STACK if m != model
+        ]
+
++ echo ''
+
++ echo '=== 3) is GEMINI_API_KEY actually set on this machine'\''s env right now ==='
+=== 3) is GEMINI_API_KEY actually set on this machine's env right now ===
++ '[' -n '' ']'
++ echo 'NOT SET locally'
+NOT SET locally
++ grep -c GEMINI_API_KEY .env
+0
++ echo '.env has no GEMINI_API_KEY line'
+.env has no GEMINI_API_KEY line
++ echo ''
+
++ echo '=== 4) full tts_service.py ==='
+=== 4) full tts_service.py ===
++ cat -n agent/tts_service.py
+     1	"""
+     2	Chatterbox TTS microservice.
+     3	Exposes POST /api/tts { "text": "..." } -> audio/wav bytes,
+     4	synthesized in the voice cloned from voice_samples/my_voice.wav.
+     5	
+     6	Wire this into chat_server.py by importing `tts_bp` and registering it:
+     7	    from agent.tts_service import tts_bp
+     8	    app.register_blueprint(tts_bp)
+     9	
+    10	Or call synthesize_speech(text) directly after generating the assistant's
+    11	final response text, and stream/save the returned bytes to the client.
+    12	"""
+    13	import io
+    14	import os
+    15	from flask import Blueprint, request, send_file, jsonify
+    16	
+    17	tts_bp = Blueprint("tts", __name__)
+    18	
+    19	VOICE_SAMPLE_PATH = os.path.join(
+    20	    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    21	    "voice_samples", "my_voice.wav"
+    22	)
+    23	
+    24	_model = None
+    25	
+    26	def _get_model():
+    27	    global _model
+    28	    if _model is None:
+    29	        try:
+    30	            from chatterbox.tts import ChatterboxTTS
+    31	        except ImportError:
+    32	            raise RuntimeError(
+    33	                "chatterbox-tts is not installed on this backend. "
+    34	                "TTS needs a separate host with more build memory — "
+    35	                "not this free-tier Render service."
+    36	            )
+    37	        _model = ChatterboxTTS.from_pretrained(device="cpu")
+    38	    return _model
+    39	
+    40	def synthesize_speech(text: str) -> bytes:
+    41	    """Returns WAV audio bytes for the given text, in the cloned voice."""
+    42	    if not os.path.exists(VOICE_SAMPLE_PATH):
+    43	        raise FileNotFoundError(
+    44	            f"No voice sample found at {VOICE_SAMPLE_PATH}. "
+    45	            "Record one first (see record_voice_sample.sh)."
+    46	        )
+    47	    model = _get_model()
+    48	    wav = model.generate(text, audio_prompt_path=VOICE_SAMPLE_PATH)
+    49	
+    50	    buf = io.BytesIO()
+    51	    import torchaudio
+    52	    torchaudio.save(buf, wav, model.sr, format="wav")
+    53	    buf.seek(0)
+    54	    return buf.read()
+    55	
+    56	@tts_bp.route("/api/tts", methods=["POST"])
+    57	def tts_endpoint():
+    58	    data = request.get_json(force=True) or {}
+    59	    text = data.get("text", "").strip()
+    60	    if not text:
+    61	        return jsonify({"error": "text is required"}), 400
+    62	    try:
+    63	        audio_bytes = synthesize_speech(text)
+    64	    except FileNotFoundError as e:
+    65	        return jsonify({"error": str(e)}), 400
+    66	    except Exception as e:
+    67	        return jsonify({"error": f"TTS failed: {e}"}), 500
+    68	
+    69	    return send_file(
+    70	        io.BytesIO(audio_bytes),
+    71	        mimetype="audio/wav",
+    72	        as_attachment=False,
+    73	        download_name="response.wav",
+    74	    )
++ echo ''
+
++ echo '=== 5) is tts_service wired into chat_server.py or agent_loop.py at all? ==='
+=== 5) is tts_service wired into chat_server.py or agent_loop.py at all? ===
++ grep -rn 'tts_service\|from agent.tts\|import tts' agent/__init__.py agent/agent_loop.py agent/chat_server.py agent/decision_provenance.py agent/flight_recorder.py agent/main.py agent/self_extend.py agent/tts_service.py agent/web_search_tool.py
+agent/chat_server.py:27:from agent.tts_service import tts_bp
+agent/tts_service.py:7:    from agent.tts_service import tts_bp
++ echo ''
+
++ echo '=== 6) is there a frontend TTS/voice call anywhere in src/? ==='
+=== 6) is there a frontend TTS/voice call anywhere in src/? ===
++ grep -rln 'speak\|tts\|voice' src/ '--include=*.jsx' '--include=*.js'
++ grep -vi node_modules
+src/hooks/useVoice.js
+src/pages/Home.jsx

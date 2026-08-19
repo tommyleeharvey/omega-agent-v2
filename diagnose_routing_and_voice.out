@@ -1,0 +1,76 @@
++ cd /data/data/com.termux/files/home/omega-agent-v2
++ echo '=== 1) the tier stack order, wherever it'\''s defined ==='
+=== 1) the tier stack order, wherever it's defined ===
++ grep -rn 'GEMINI\|gemini' api/groq_client.py
++ head -20
+10:from api import gemini_client
+147:    if _tier_start_index == 0 and os.environ.get("GEMINI_API_KEY"):
+149:            gemini_result = gemini_client.chat_completion(
+155:            return gemini_result if return_message else gemini_result.get("content", "")
++ echo ''
+
++ echo '=== 2) full tier selection function ==='
+=== 2) full tier selection function ===
++ grep -n 'def chat_completion\|def.*tier\|TIER' api/groq_client.py
+36:MODEL_TIER_STACK = [
+122:def chat_completion(messages, model=None, temperature=0.3, max_tokens=2048,
+129:    Walks MODEL_TIER_STACK on rate-limit (429). A per-model daily-quota hit
+197:        tier = MODEL_TIER_STACK if model is None else [model] + [
+198:            m for m in MODEL_TIER_STACK if m != model
++ echo ''
+
++ echo '=== 3) is Gemini actually being attempted, and what error does it throw ==='
+=== 3) is Gemini actually being attempted, and what error does it throw ===
++ grep -n gemini api/cerebras_client.py api/claude_client.py api/gemini_client.py api/groq_client.py api/main.py api/openrouter_client.py -ri
++ head -30
+api/cerebras_client.py:5:thin wrapper rather than a full conversion layer like claude/gemini clients.
+api/cerebras_client.py:6:Sits after Claude/Gemini, ahead of the Groq tier stack, as a genuine
+api/gemini_client.py:1:"""Google Gemini adapter for Omega's hybrid model stack.
+api/gemini_client.py:3:Dormant unless GEMINI_API_KEY is configured. Free tier: Gemini 2.5 Flash,
+api/gemini_client.py:15:logger = logging.getLogger("GeminiClient")
+api/gemini_client.py:16:GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+api/gemini_client.py:17:# gemini-2.5-flash was retired for new API accounts (404: "no longer
+api/gemini_client.py:18:# available to new users"). gemini-3.6-flash is Google's current stable
+api/gemini_client.py:19:# Flash model as of Aug 2026 - use GEMINI_MODEL env var to override without
+api/gemini_client.py:21:GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
+api/gemini_client.py:55:        gemini_role = "model" if role == "assistant" else "user"
+api/gemini_client.py:69:            contents.append({"role": gemini_role, "parts": parts})
+api/gemini_client.py:90:        raise RuntimeError(f"Gemini returned no candidates: {payload}")
+api/gemini_client.py:100:                "id": f"gemini_call_{i}",
+api/gemini_client.py:114:    key = os.environ.get("GEMINI_API_KEY")
+api/gemini_client.py:116:        raise RuntimeError("GEMINI_API_KEY is not configured")
+api/gemini_client.py:131:    url = GEMINI_API_URL.format(model=os.environ.get("GEMINI_MODEL", GEMINI_MODEL))
+api/gemini_client.py:139:        raise RuntimeError(f"Gemini request failed ({response.status_code}): {response.text[:300]}")
+api/groq_client.py:10:from api import gemini_client
+api/groq_client.py:145:            logger.warning("Claude failed; trying Gemini: %s", exc)
+api/groq_client.py:147:    if _tier_start_index == 0 and os.environ.get("GEMINI_API_KEY"):
+api/groq_client.py:149:            gemini_result = gemini_client.chat_completion(
+api/groq_client.py:155:            return gemini_result if return_message else gemini_result.get("content", "")
+api/groq_client.py:157:            logger.warning("Gemini failed; trying Cerebras: %s", exc)
+api/openrouter_client.py:9:(no card required). Not a primary tier - sits after Claude/Gemini/Cerebras,
++ echo ''
+
++ echo '=== 4) current voice/TTS wiring state ==='
+=== 4) current voice/TTS wiring state ===
++ find agent api -iname '*tts*' -o -iname '*voice*'
+agent/tts_service.py
++ grep -rln 'chatterbox\|elevenlabs\|voice_clone\|speaker_id' agent/ api/
+agent/tts_service.py
++ echo ''
+
++ echo '=== 5) any existing voice sample files or model refs ==='
+=== 5) any existing voice sample files or model refs ===
++ find . -maxdepth 2 -iname '*voice*' -o -iname '*.wav' -o -iname '*.mp3'
++ grep -v node_modules
+./record_voice_sample.sh
+./voice_samples
+./voice_samples/my_voice.wav
+./diagnose_voice_and_backend.sh
+./finish_voice_setup.sh
+./commit_voice_and_test.sh
+./add_voice_toggle.sh
+./fix_voice_dedupe_and_native_tts.sh
+./diagnose_voice_live.sh
+./diagnose_job_failure_and_fix_voice.sh
+./diagnose_routing_and_voice.sh
+./diagnose_routing_and_voice.out
