@@ -1,0 +1,9 @@
++ cd /data/data/com.termux/files/home/omega-agent-v2
+++ grep -oP '(?<=Bearer )[a-zA-Z0-9_-]+' apply_gemini_key.sh
+++ head -1
++ TOKEN=rnd_vv9FVHwsb9nQr5Giy527Gq5LTAwa
++ '[' -z rnd_vv9FVHwsb9nQr5Giy527Gq5LTAwa ']'
++ python3 -c $'\nimport sys, json\ntry:\n    d = json.load(sys.stdin)\n    for entry in d:\n        text = entry.get(\'message\', entry) if isinstance(entry, dict) else entry\n        print(text)\nexcept Exception as e:\n    print(\'parse error:\', e)\n    print(sys.stdin.read())\n'
++ curl -s -H 'Authorization: Bearer rnd_vv9FVHwsb9nQr5Giy527Gq5LTAwa' 'https://api.render.com/v1/services/srv-da20pelg1s2s73de3n70/logs?limit=50'
+parse error: Extra data: line 1 column 5 (char 4)
+
