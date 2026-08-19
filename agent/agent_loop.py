@@ -676,6 +676,28 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
                     "name": tc["function"]["name"],
                     "content": result_json,
                 })
+
+                # A local environment inspection is complete and bounded.
+                if (
+                    tc["function"]["name"] in {"inspect_local_environment", "scan_iot_devices"}
+                    and isinstance(result, dict)
+                    and result.get("success") is not False
+                ):
+                    inspection = result.get("output", result)
+                    forced_final = {
+                        "step": step,
+                        "role": "assistant",
+                        "content": "LOCAL_INSPECTION_OK\n" + json_module.dumps(inspection, sort_keys=True, default=str),
+                        "final": True,
+                        "completion_status": "local_inspection_complete",
+                    }
+                    transcript.append(forced_final)
+                    if on_step:
+                        try:
+                            on_step(forced_final)
+                        except Exception:
+                            pass
+                    return transcript
         else:
             final_entry = {
                 "step": max_steps,
