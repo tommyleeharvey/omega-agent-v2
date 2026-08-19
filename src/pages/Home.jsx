@@ -259,7 +259,7 @@ Return 3-7 steps. Be specific to the actual task.`;
       content: text,
       metadata: {
         mode,
-        attachments: normalizedAttachments.map(({ name, type, size }) => ({ name, type, size })),
+        attachments: normalizedAttachments.map(({ name, type, size, isImage, dataUrl }) => ({ name, type, size, isImage, dataUrl: isImage ? dataUrl : null })),
         mission: newMission,
       },
     });
@@ -270,7 +270,7 @@ Return 3-7 steps. Be specific to the actual task.`;
       status: "running",
       lastUserText: text,
       mode,
-        attachments: normalizedAttachments.map(({ name, type, size }) => ({ name, type, size })),
+        attachments: normalizedAttachments.map(({ name, type, size, isImage, dataUrl }) => ({ name, type, size, isImage, dataUrl: isImage ? dataUrl : null })),
         mission: newMission,
         lastStep: "Preparing Omega mission contract",
     });

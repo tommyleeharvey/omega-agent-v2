@@ -140,7 +140,14 @@ export default function MessageBubble({ message, onOpenWorkspace , onSpeak }) {
         >
           <div className="text-sm leading-relaxed">
             {isUser ? (
-              <div className="whitespace-pre-wrap">{message.content}</div>
+              {message.metadata?.attachments?.some(a => a.isImage && a.dataUrl) && (
+              <div className="flex gap-2 flex-wrap mb-2">
+                {message.metadata.attachments.filter(a => a.isImage && a.dataUrl).map((a, i) => (
+                  <img key={i} src={a.dataUrl} alt={a.name} className="max-w-[200px] max-h-[200px] rounded-lg border border-white/10 object-cover" />
+                ))}
+              </div>
+            )}
+            <div className="whitespace-pre-wrap">{message.content}</div>
             ) : (
               <MessageMarkdown content={message.content} />
             )}
