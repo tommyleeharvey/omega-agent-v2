@@ -626,7 +626,7 @@ Return 3-7 steps. Be specific to the actual task.`;
             ) : (
               <>
                 {messages.map((msg) => (
-                  <MessageBubble key={msg.id} message={msg} onOpenWorkspace={() => setShowMobileWorkspace(true)} />
+                  <MessageBubble key={msg.id} message={msg} onOpenWorkspace={() = onSpeak={speakText} /> setShowMobileWorkspace(true)} />
                 ))}
                 {isThinking && <TypingIndicator />}
                 <div ref={messagesEndRef} />
