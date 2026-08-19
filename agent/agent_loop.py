@@ -481,6 +481,7 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
             )
 
             tool_calls = message.get("tool_calls")
+            grounded, violations = True, []
 
             if not tool_calls:
                 final_content = message.get("content", "")
@@ -592,16 +593,16 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
                     except Exception:
                         pass
                 grounded, violations = _verify_grounding(final_content, transcript)
-            if not grounded and violations:
-                final_content += (
-                    "\n\n[SYSTEM WARNING: the following claims could not be "
-                    "verified against this session's actual tool results and "
-                    "should not be trusted]\n"
-                    + "\n".join(f"- {v}" for v in violations)
-                )
-            _safe_sign_event(signed_log, event_type="grounding_check", data={
-                "step": step, "grounded": grounded, "violations": violations,
-            })
+                if not grounded and violations:
+                    final_content += (
+                        "\n\n[SYSTEM WARNING: the following claims could not be "
+                        "verified against this session's actual tool results and "
+                        "should not be trusted]\n"
+                        + "\n".join(f"- {v}" for v in violations)
+                    )
+                _safe_sign_event(signed_log, event_type="grounding_check", data={
+                    "step": step, "grounded": grounded, "violations": violations,
+                })
             _safe_sign_event(signed_log, event_type="agent_final", data={"step": step, "content": final_content[:1000]})
             break
 
