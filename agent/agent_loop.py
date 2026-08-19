@@ -462,6 +462,7 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
         ]
 
     transcript = []
+    final_content = ""
     provenance_parent_id = None
     available_tool_names = [item["function"]["name"] for item in TOOLS]
     loop = asyncio.new_event_loop()
@@ -603,8 +604,8 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
                 _safe_sign_event(signed_log, event_type="grounding_check", data={
                     "step": step, "grounded": grounded, "violations": violations,
                 })
-            _safe_sign_event(signed_log, event_type="agent_final", data={"step": step, "content": final_content[:1000]})
-            break
+                _safe_sign_event(signed_log, event_type="agent_final", data={"step": step, "content": final_content[:1000]})
+                break
 
             messages.append(message)
             decision_records = []
