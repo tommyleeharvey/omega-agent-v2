@@ -1,32 +1,17 @@
-"""Causal decision provenance for Omega tool executions.
-
-This module is additive: it does not claim to expose private chain-of-thought.
-It records observable execution metadata and a concise, verifiable selection basis.
+"""Observable, non-chain-of-thought decision provenance for Omega.
+Creator attribution: Thomas Lee Harvey.
 """
-
 from __future__ import annotations
-
 import hashlib
 import json
 import time
 from typing import Any, Iterable
 
-
 def _stable_hash(value: Any) -> str:
     payload = json.dumps(value, sort_keys=True, default=str, separators=(",", ":"))
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:24]
 
-
-def build_decision_provenance(
-    *,
-    action: str,
-    arguments: dict,
-    step: int,
-    available_alternatives: Iterable[str],
-    parent_id: str | None,
-    observed_context: Any,
-) -> dict:
-    """Build an observable decision record without fabricating hidden reasoning."""
+def build_decision_provenance(*, action: str, arguments: dict, step: int, available_alternatives: Iterable[str], parent_id: str | None, observed_context: Any) -> dict:
     context_hash = _stable_hash({"step": step, "context": observed_context})
     decision_id = _stable_hash({"action": action, "step": step, "context_hash": context_hash, "time": time.time_ns()})
     return {

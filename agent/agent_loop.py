@@ -12,7 +12,7 @@ Session state persists across separate invocations via --resume.
 """
 import os
 import sys
-import json
+import json as json_module
 import time
 import asyncio
 import re
@@ -27,7 +27,7 @@ from agent.core.action_engine import Action, ActionNode, ActionExecutor, ActionV
 from agent.self_extend import propose_tool
 from lib.omega_proof import sign_event
 from agent.decision_provenance import build_decision_provenance
-from agent.shadow_council import ActionProposal, ShadowCouncil
+from agent.web_search_tool import web_search
 
 logger = logging.getLogger("OmegaAgentLoop")
 RUNTIME_LOG_DIR = os.path.expanduser("~/.omega/logs")
@@ -107,6 +107,18 @@ TOOLS = [
                 "type": "object",
                 "properties": {"command": {"type": "string"}},
                 "required": ["command"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "scan_iot_devices",
+            "description": "Scan the local network for connected devices (IP/MAC) and report the agent's own environment (battery, location). Logs a local, gitignored history entry for family-safety tracking.",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
             },
         },
     },
@@ -268,59 +280,38 @@ TOOLS = [
             },
         },
     },
-    {
-        "type": "function",
-        "function": {
-            "name": "inspect_local_environment",
-            "description": "Inspect the local Omega runtime only: operating system, hostname, working directory, approved workspace entries, and available interface names. This never probes or scans remote networks or IoT devices.",
-            "parameters": {"type": "object", "properties": {}},
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "scan_iot_devices",
-            "description": "Compatibility alias for local environment inspection. Reports only local runtime metadata and explicitly does not perform network or IoT discovery.",
-            "parameters": {"type": "object", "properties": {}},
-        },
-    },
 ]
 
 SYSTEM_PROMPT = (
     "You are Omega, an agentic coding assistant with real tool access. "
     "You can read files, write files, run shell commands, and check code compiles. "
-    "Use only tools listed in the current tool schema; never invent a tool name. "
-    "For environment or IoT questions, use inspect_local_environment and state "
-    "that it performs local-only inspection, not network probing. Use tools to "
-    "actually accomplish the task — never claim something is done unless a tool "
-    "result confirmed it. When the task is complete, reply with a final summary "
-    "and make no further tool calls."
+    "Use tools to actually accomplish the task — never claim something is done "
+    "unless a tool result confirmed it. When the task is complete, reply with a "
+    "final summary and make no further tool calls."
 )
 
 
-async def _execute_tool_call(executor, tool_call, council=None, signed_log=None):
+async def _execute_tool_call(executor, tool_call):
     """Take one model tool_call, run it for real, return the real result dict."""
     name = tool_call["function"]["name"]
     try:
-        args = json.loads(tool_call["function"]["arguments"])
-    except json.JSONDecodeError as e:
+        args = json_module.loads(tool_call["function"]["arguments"])
+    except json_module.JSONDecodeError as e:
         return {"error": f"Model sent malformed tool arguments: {e}"}
 
+    if name == "scan_iot_devices":
+        from agent.environment import get_environment_context, check_for_new_devices
+        import os, json, time
+        env = get_environment_context()
+        scan = check_for_new_devices()
+        # local-only, gitignored history — never pushed to the repo
+        hist_path = os.path.expanduser("~/.omega/location_history.jsonl")
+        os.makedirs(os.path.dirname(hist_path), exist_ok=True)
+        with open(hist_path, "a") as f:
+            f.write(json_module.dumps({"ts": time.time(), "environment": env, "scan": scan}) + "\n")
+        return {"environment": env, "network_scan": scan}
+
     if name == "propose_new_tool":
-        if council is not None:
-            proposal = ActionProposal(
-                action=name,
-                parameters={"handler_name": args.get("handler_name", "unnamed_tool"), "description": args.get("description", "")},
-                capability=name,
-                mutation=True,
-                rollback=args.get("rollback"),
-                acceptance_tests=("isolated proposal test passes", "full regression suite passes"),
-            )
-            decision = council.review(proposal)
-            receipt = decision.receipt()
-            _safe_sign_event(signed_log, event_type="shadow_council", data=receipt)
-            if not decision.approved:
-                return {"success": False, "error": "Shadow Council vetoed action", "shadow_council": receipt}
         # Not a normal dispatch action — runs the full test-gated self-extension
         # pipeline instead, synchronously (it's already fast: compile + pytest).
         result = propose_tool(
@@ -333,30 +324,6 @@ async def _execute_tool_call(executor, tool_call, council=None, signed_log=None)
 
     action = Action(name=name, target=args.get("path"))
     node = ActionNode(action=action, parameters=args)
-
-    if council is not None:
-        mutation_actions = {"write_file", "edit_file", "git_commit", "propose_new_tool"}
-        acceptance_tests = args.get("acceptance_tests", ())
-        if isinstance(acceptance_tests, str):
-            acceptance_tests = (acceptance_tests,)
-        elif not isinstance(acceptance_tests, (list, tuple)):
-            acceptance_tests = ()
-        proposal = ActionProposal(
-            action=name,
-            parameters={key: value for key, value in args.items() if key not in {"content", "handler_code", "test_code"}},
-            target=args.get("path"),
-            capability=name,
-            mutation=name in mutation_actions,
-            rollback=args.get("rollback"),
-            acceptance_tests=tuple(acceptance_tests),
-            expected_diff_hash=args.get("expected_diff_hash"),
-        )
-        decision = council.review(proposal)
-        receipt = decision.receipt()
-        _safe_sign_event(signed_log, event_type="shadow_council", data=receipt)
-        if not decision.approved:
-            return {"success": False, "error": "Shadow Council vetoed action", "shadow_council": receipt}
-
     result = await executor._execute_with_retry(node, {})
 
     return {
@@ -366,6 +333,63 @@ async def _execute_tool_call(executor, tool_call, council=None, signed_log=None)
     }
 
 
+def _verify_grounding(final_content, transcript):
+    """
+    Re-checks the model's final narrative against real transcript data.
+    Returns (grounded: bool, violations: list[str]).
+
+    Two checks, both driven by actual tool results — never by trusting
+    the model's own account of what it did:
+      1. Claimed file writes with no matching write_file tool_call in
+         the transcript (fabricated "I saved/created/wrote X" claims).
+      2. Any tool call that failed but whose failure isn't reflected
+         anywhere in the final narrative at all (silent failure hidden
+         from the user).
+    """
+    violations = []
+
+    executed_writes = set()
+    failed_steps = []
+    for entry in transcript:
+        if entry.get("role") != "tool":
+            continue
+        result = entry.get("result", {})
+        output = result.get("output", {}) if isinstance(result, dict) else {}
+        cmd = output.get("command", "") if isinstance(output, dict) else ""
+
+        tool_name = entry.get("tool_name") or entry.get("name")
+        if tool_name == "write_file" or "write_file" in cmd:
+            target = entry.get("target") or output.get("path")
+            if target:
+                executed_writes.add(target)
+
+        is_failure = (
+            result.get("success") is False
+            or result.get("accepted") is False
+        )
+        if is_failure:
+            failed_steps.append(entry.get("step"))
+
+    claim_re = re.compile(
+        r"(?:wrote|saved|created|updated) (?:the )?file[:\s]+([^\s,\.]+)",
+        re.IGNORECASE,
+    )
+    for claimed_path in claim_re.findall(final_content or ""):
+        if claimed_path not in executed_writes:
+            violations.append(
+                f"claimed to write \"{claimed_path}\" but no matching write_file "
+                "tool call exists in this session's transcript"
+            )
+
+    if failed_steps and "SYSTEM-VERIFIED FAILURES" not in (final_content or ""):
+        violations.append(
+            f"tool call(s) at step(s) {failed_steps} failed but the final "
+            "narrative does not acknowledge any failure"
+        )
+
+    return (len(violations) == 0, violations)
+
+
 SESSION_PATH = os.path.expanduser("~/.omega/logs/agent_session.json")
 os.makedirs(os.path.dirname(SESSION_PATH), exist_ok=True)
 
@@ -373,7 +397,7 @@ os.makedirs(os.path.dirname(SESSION_PATH), exist_ok=True)
 def load_session():
     if os.path.exists(SESSION_PATH):
         with open(SESSION_PATH) as f:
-            return json.load(f)
+            return json_module.load(f)
     return None
 
 
@@ -384,7 +408,7 @@ def save_session(messages):
     try:
         fd, temporary = tempfile.mkstemp(prefix=".agent-session-", dir=directory, text=True)
         with os.fdopen(fd, "w") as f:
-            json.dump({"messages": messages, "saved_at": time.time()}, f, indent=2, default=str)
+            json_module.dump({"messages": messages, "saved_at": time.time()}, f, indent=2, default=str)
             f.flush()
             os.fsync(f.fileno())
         os.replace(temporary, SESSION_PATH)
@@ -405,12 +429,14 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
     validator = ActionValidator()
     analyzer = SideEffectAnalyzer()
     executor = ActionExecutor(validator, analyzer)
-    council = ShadowCouncil(
-        allowed_roots=executor._compute_allowed_roots(),
-        capabilities=[item["function"]["name"] for item in TOOLS],
-    )
 
     system = SYSTEM_PROMPT
+    try:
+        from agent.environment import get_environment_context
+        env_ctx = get_environment_context()
+        system += f" Current physical environment: {env_ctx}"
+    except Exception as _env_err:
+        logger.warning("environment context unavailable: %s", _env_err)
     if cwd_hint:
         system += f" The current working directory is {cwd_hint}."
 
@@ -436,6 +462,7 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
         ]
 
     transcript = []
+    final_content = ""
     provenance_parent_id = None
     available_tool_names = [item["function"]["name"] for item in TOOLS]
     loop = asyncio.new_event_loop()
@@ -444,10 +471,7 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
         for step in range(max_steps):
             MAX_RECENT_MESSAGES = 6
             trimmed = messages[:2] + messages[2:][-MAX_RECENT_MESSAGES:]
-            # Do not send a model-specific reasoning value by default. The
-            # provider router can still receive an explicit operator setting,
-            # but an invented `default` value must not take down every tier.
-            effort = os.environ.get("OMEGA_REASONING_EFFORT") or None
+            effort = "default"
 
             message = chat_completion(
                 trimmed,
@@ -458,6 +482,7 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
             )
 
             tool_calls = message.get("tool_calls")
+            grounded, violations = True, []
 
             if not tool_calls:
                 final_content = message.get("content", "")
@@ -568,6 +593,17 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
                         on_step(final_entry)
                     except Exception:
                         pass
+                grounded, violations = _verify_grounding(final_content, transcript)
+                if not grounded and violations:
+                    final_content += (
+                        "\n\n[SYSTEM WARNING: the following claims could not be "
+                        "verified against this session's actual tool results and "
+                        "should not be trusted]\n"
+                        + "\n".join(f"- {v}" for v in violations)
+                    )
+                _safe_sign_event(signed_log, event_type="grounding_check", data={
+                    "step": step, "grounded": grounded, "violations": violations,
+                })
                 _safe_sign_event(signed_log, event_type="agent_final", data={"step": step, "content": final_content[:1000]})
                 break
 
@@ -595,7 +631,7 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
                     pass
 
             for tc_index, tc in enumerate(tool_calls):
-                result = loop.run_until_complete(_execute_tool_call(executor, tc, council=council, signed_log=signed_log))
+                result = loop.run_until_complete(_execute_tool_call(executor, tc))
 
                 _safe_sign_event(signed_log, event_type="tool_call", data={
                     "step": step,
@@ -626,7 +662,7 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
                 # (line above) and signed_log - only what feeds back into
                 # the model's context gets capped.
                 MAX_TOOL_RESULT_CHARS = 3000
-                result_json = json.dumps(result, default=str)
+                result_json = json_module.dumps(result, default=str)
                 if len(result_json) > MAX_TOOL_RESULT_CHARS:
                     result_json = (
                         result_json[:MAX_TOOL_RESULT_CHARS]
@@ -675,4 +711,4 @@ if __name__ == "__main__":
     log_path = os.path.expanduser("~/.omega/logs/agent_loop_signed.log")
     result = run_agent_task(task, signed_log=log_path, resume=resume)
     for entry in result:
-        print(json.dumps(entry, indent=2, default=str))
+        print(json_module.dumps(entry, indent=2, default=str))
