@@ -171,14 +171,7 @@ export default function MessageBubble({ message, onOpenWorkspace , onSpeak }) {
             <Volume2 className="w-3 h-3" /> Speak
           </button>
         )}
-        {onSpeak && !isUser && (
-          <button
-            onClick={() => onSpeak(message.content)}
-            className="flex items-center gap-1 text-[11px] text-white/25 hover:text-teal-400 transition-colors"
-          >
-            <Volume2 className="w-3 h-3" /> Speak
-          </button>
-        )}
+
         {!isUser && onOpenWorkspace && (
           <button
             onClick={onOpenWorkspace}
