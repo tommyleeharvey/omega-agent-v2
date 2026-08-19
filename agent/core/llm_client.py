@@ -8,6 +8,7 @@ vendor SDK, so swapping providers means changing one line of config.
 
 import os
 import json
+import asyncio
 import logging
 from abc import ABC, abstractmethod
 from typing import Optional
@@ -22,10 +23,34 @@ class LLMClient(ABC):
         raise NotImplementedError
 
 
-class GroqClient(LLMClient):
-    """Real Groq-backed client. Requires GROQ_API_KEY in environment."""
+class RouterClient(LLMClient):
+    """
+    Multi-provider, multi-model failover client. Wraps llm_router.call_llm,
+    which cycles through every model on a provider (best -> worst) before
+    falling through to the next provider (Groq -> Gemini -> Cerebras ->
+    OpenRouter). This is now the real default backend.
+    """
 
-    def __init__(self, model: str = "llama-3.3-70b-versatile", api_key: Optional[str] = None):
+    def __init__(self):
+        from agent.llm_router import call_llm
+        self._call_llm = call_llm
+        self._last_used = None
+
+    async def complete(self, prompt: str, temperature: float = 0.4, max_tokens: int = 800) -> str:
+        messages = [{"role": "user", "content": prompt}]
+        result, used = await asyncio.to_thread(
+            self._call_llm, messages, None, None, max_tokens
+        )
+        self._last_used = used
+        logger.info(f"RouterClient: answered via {used}")
+        return result["choices"][0]["message"]["content"]
+
+
+class GroqClient(LLMClient):
+    """Real Groq-backed client. Requires GROQ_API_KEY in environment.
+    Kept for direct/manual use; get_default_client() now prefers RouterClient."""
+
+    def __init__(self, model: str = "openai/gpt-oss-120b", api_key: Optional[str] = None):
         self.model = model
         self.api_key = api_key or os.environ.get("GROQ_API_KEY")
         if not self.api_key:
@@ -75,12 +100,18 @@ class MockLLMClient(LLMClient):
 
 def get_default_client() -> LLMClient:
     """
-    Picks a backend from environment config. Falls back to Mock with a loud
-    warning rather than silently pretending to be real - this is the fix for
-    the pattern in the earlier code where failures were swallowed.
+    Picks a backend from environment config. Defaults to RouterClient (multi-
+    provider, multi-model failover). Falls back to Mock with a loud warning
+    rather than silently pretending to be real.
     """
-    backend = os.environ.get("OMEGA_LLM_BACKEND", "groq").lower()
-    if backend == "groq":
+    backend = os.environ.get("OMEGA_LLM_BACKEND", "router").lower()
+    if backend == "router":
+        try:
+            return RouterClient()
+        except Exception as e:
+            logger.warning(f"Falling back to MockLLMClient: {e}")
+            return MockLLMClient()
+    elif backend == "groq":
         try:
             return GroqClient()
         except RuntimeError as e:
@@ -90,4 +121,3 @@ def get_default_client() -> LLMClient:
         return MockLLMClient()
     else:
         raise ValueError(f"Unknown OMEGA_LLM_BACKEND: {backend}")
-
