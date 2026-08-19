@@ -1,0 +1,17 @@
+{
+  "after": {
+    "api/claude_client.py": "3d9504580be4299adad4d94ff5cde66d7f8a0584ef2af7314dca58865b22f269"
+  },
+  "before": {
+    "api/claude_client.py": "3d9504580be4299adad4d94ff5cde66d7f8a0584ef2af7314dca58865b22f269"
+  },
+  "created_at": 1787077566.8472364,
+  "files": [
+    "api/claude_client.py"
+  ],
+  "kind": "apply",
+  "receipt_id": "1787077566-f6f42ad355f30bc7",
+  "rollback": {
+    "api/claude_client.py": "/data/data/com.termux/files/usr/tmp/omega-backup-qjz8_kxx"
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "creator": "Thomas Lee Harvey",
+  "expected_commit": "2d2a41e91936c5085d1f905c59c0fefee51a0c27",
+  "files": {
+    "agent/agent_loop.py": {
+      "actual": "3d91b011caf3c4622e0ef50101c43e94221a2fb734f317d68a79338ac0ad48d7",
+      "expected": "3d91b011caf3c4622e0ef50101c43e94221a2fb734f317d68a79338ac0ad48d7",
+      "ok": true
+    },
+    "agent/mission_autopilot.py": {
+      "actual": "b31af620299a31928a363610e994602c4af1aea29373bff6e5ee3b8b71635628",
+      "expected": "b31af620299a31928a363610e994602c4af1aea29373bff6e5ee3b8b71635628",
+      "ok": true
+    },
+    "agent/replay_lab.py": {
+      "actual": "c6c82e4865eaec6dfb212b8275429d866dc66f414dd394c937928bd1259344fb",
+      "expected": "c6c82e4865eaec6dfb212b8275429d866dc66f414dd394c937928bd1259344fb",
+      "ok": true
+    },
+    "agent/shadow_council.py": {
+      "actual": "5e704235566d2809103ec19806b667865c5475e0ec652e524385273b78ea7f2a",
+      "expected": "5e704235566d2809103ec19806b667865c5475e0ec652e524385273b78ea7f2a",
+      "ok": true
+    },
+    "tests/test_mission_autopilot.py": {
+      "actual": "1f08293b3f7fa4ef50970a2c294ef91b4e39743e3ae8cd41d18e67375be41cc5",
+      "expected": "1f08293b3f7fa4ef50970a2c294ef91b4e39743e3ae8cd41d18e67375be41cc5",
+      "ok": true
+    },
+    "tests/test_reliability_audit.py": {
+      "actual": "6481e9347a90dcfc7c3937425aefe1cc922b00eab50a54fdb926d0b93062b29b",
+      "expected": "6481e9347a90dcfc7c3937425aefe1cc922b00eab50a54fdb926d0b93062b29b",
+      "ok": true
+    },
+    "tests/test_replay_lab.py": {
+      "actual": "fc35ae6d6dae6682909b80cdc2223b521abaa1627dcd24f1d304aa9b3ebf760f",
+      "expected": "fc35ae6d6dae6682909b80cdc2223b521abaa1627dcd24f1d304aa9b3ebf760f",
+      "ok": true
+    },
+    "tests/test_shadow_council.py": {
+      "actual": "3e1fa7e1a688516edceb540cb64d33d3964ecdf7a182b9e20c97394025423793",
+      "expected": "3e1fa7e1a688516edceb540cb64d33d3964ecdf7a182b9e20c97394025423793",
+      "ok": true
+    },
+    "tools/omega_reliability_audit.py": {
+      "actual": "9851be56e460b36ceca7ab6b57ad030a180c29b579142aca4c35525e0d05855d",
+      "expected": "9851be56e460b36ceca7ab6b57ad030a180c29b579142aca4c35525e0d05855d",
+      "ok": true
+    }
+  },
+  "findings": [],
+  "manifest_sha256": "3baa8ae699a705c7ce4266ef95cf4c4cefe0edd53f6c653ac76f8121096dc7a5",
+  "observed_commit": "2d2a41e91936c5085d1f905c59c0fefee51a0c27",
+  "schema": "omega-continuity-receipt/v1",
+  "status": "verified",
+  "tests": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "py_compile",
+        "tools/omega_reliability_audit.py",
+        "agent/shadow_council.py",
+        "agent/replay_lab.py",
+        "agent/mission_autopilot.py",
+        "agent/agent_loop.py"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_reliability_audit.py"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "RELIABILITY_AUDIT_POLICY_SMOKE_OK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_shadow_council.py"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "SHADOW_COUNCIL_SMOKE_OK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_replay_lab.py"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "REPLAY_LAB_SMOKE_OK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_mission_autopilot.py"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "MISSION_AUTOPILOT_SMOKE_OK\n"
+    }
+  ],
+  "verified_at": 1787081926.31331
+}

@@ -1,0 +1,428 @@
+OMEGA CELTIC PROCESSOR DISCOVERY PACKET
+creator=Thomas Lee Harvey
+generated_at=2026-08-18T20:28:00Z
+launch_product=US virtual prepaid pilot
+omega_role=ledger+policy+proof+reconciliation control plane
+issuer_role=Celtic-approved issuer/processor for credentials+custody+network authorization+settlement
+processor_name=UNKNOWN_UNLESS_FOUND_IN_APPROVED_MATERIALS
+program_manager=UNKNOWN_UNLESS_FOUND_IN_APPROVED_MATERIALS
+sandbox_base_url=UNKNOWN_UNLESS_FOUND_IN_APPROVED_MATERIALS
+webhook_event_names=UNKNOWN_UNLESS_FOUND_IN_APPROVED_MATERIALS
+webhook_signature_method=UNKNOWN_UNLESS_FOUND_IN_APPROVED_MATERIALS
+settlement_format_and_timing=UNKNOWN_UNLESS_FOUND_IN_APPROVED_MATERIALS
+
+APPROVED_SEARCH_ROOTS
+/data/data/com.termux/files/home/omega-agent-v2
+/data/data/com.termux/files/home/Omega_Finacial_Network
+/data/data/com.termux/files/home/OMEGAOPS.AI
+
+NON_SECRET_MATCHES
+/data/data/com.termux/files/home/OMEGAOPS.AI/.eenv:16:EMAIL_PASSWORD=[REDACTED]                                  OMEGA_ADMIN_UIDS=8831840657                                          WEBHOOK_SECRET=[REDACTED]                                    COMPANY_WEBSITE=https://omegaai.io
+/data/data/com.termux/files/home/OMEGAOPS.AI/.eenv:20:OMEGA_AUTO_RESTART=1                                               BIZ_HOUR_END=24                                                    OMEGA_CLOUD_ADMIN_KEY=tsh210pPlsgl78DDPidQv-zrMO8UpKT6nbcYhq-xiZc  NODE3_BEARER_TOKEN=[REDACTED]     TUNNEL_URL=https://antivirus-configurations-generic-basin.trycloudflare.com                                                           THOMAS_SOVEREIGN_KEY=ONJxtkCYVWqd6MZzyysl1d3o5cqEmXKDWVS2K-NKVos   OMEGA_CLOUD_ADMIN_KEY=omega-admin                                  STRIPE_WEBHOOK_SECRET=[REDACTED]       PG_HOST="[REDACTED_SECURITY_VALUE].0.0.1"                                                PG_PORT=[REDACTED_SECURITY_VALUE]                                                       PG_DB="omega_bank"
+/data/data/com.termux/files/home/OMEGAOPS.AI/.env_true:35:STRIPE_WEBHOOK_SECRET=[REDACTED]
+/data/data/com.termux/files/home/OMEGAOPS.AI/.env_true:40:BOT_SECRET_PIN=Omega2025                              WEBHOOK_SECRET=[REDACTED]
+/data/data/com.termux/files/home/OMEGAOPS.AI/.mtb/exec/gold_verification.sh:13:echo " [~] CONNECTING TO CELTIC BANK SETTLEMENT LAYER..."
+/data/data/com.termux/files/home/OMEGAOPS.AI/.mtb/exec/omega_transfer_monitor.sh:15:echo " [✓] AUTHORIZING SETTLEMENT ENGINE..."
+/data/data/com.termux/files/home/OMEGAOPS.AI/BRIDGE.md:4:- **Manus Sandbox**: Online
+/data/data/com.termux/files/home/OMEGAOPS.AI/BRIDGE.md:10:- **[[REDACTED_SECURITY_VALUE]-07-15 12:10:00]**: `mtb_agent.py` deployed on sandbox side.
+/data/data/com.termux/files/home/OMEGAOPS.AI/BRIDGE.md:38:Once the `termux_mtb_agent.py` is running, it will continuously synchronize files between your Termux environment and the Manus Sandbox via the GitHub repository. You can monitor the `BRIDGE.md` file for updates on the connection status and system logs.
+/data/data/com.termux/files/home/OMEGAOPS.AI/MANUS_BOOT.md:11:   destroyed with their sandbox by design. Generate new ones.
+/data/data/com.termux/files/home/OMEGAOPS.AI/MANUS_BOOTSTRAP.md:3:If you're reading this, your previous sandbox likely ran out of credits and was destroyed. That's expected — private keys never survive that. Do these steps in order before touching anything else.
+/data/data/com.termux/files/home/OMEGAOPS.AI/MANUS_BOOTSTRAP.md:9:Run `manus_ed25519_signer.py` (or equivalent) in your current sandbox. Keep the private key local. Report back ONLY the public key hex — must be exactly 64 hex characters.
+/data/data/com.termux/files/home/OMEGAOPS.AI/MASTER_ROADMAP.md:12:- [ ] **Settlement Acceleration**: Patch `auth_capture_settlement_engine.py` for parallel processing.
+/data/data/com.termux/files/home/OMEGAOPS.AI/OMEGA_CORE_WHITE_PAPER.md:6:This document details the engineering of a zero-infrastructure, high-latency, high-reliability communication bridge between a sandboxed ASI environment and a mobile Termux terminal. The system leverages GitHub as a decentralized ledger and message relay.
+/data/data/com.termux/files/home/OMEGAOPS.AI/OMEGA_CORE_WHITE_PAPER.md:10:- **Agent Synchronization**: Both the Sandbox (Overseer) and Termux (Client) agents maintain independent pointers to the ledger, ensuring no message is lost or double-processed.
+/data/data/com.termux/files/home/OMEGAOPS.AI/OMEGA_CORE_WHITE_PAPER.md:11:- **Autonomous Architect**: A background process in the sandbox that proactively audits repositories and pushes engineering improvements.
+/data/data/com.termux/files/home/OMEGAOPS.AI/docs/gallery/index.html:28794:      the Sovereign Registry, and every piece of the trading and settlement
+/data/data/com.termux/files/home/OMEGAOPS.AI/docs/reserve/index.html:[REDACTED_SECURITY_VALUE]:    <div class="stack-card"><div class="num">06</div><h4>Settlement & Gateway Layer</h4><p>In-flight transactions settle only on confirmed Stripe webhook — preventing double-spends on unconfirmed fiat.</p></div>
+/data/data/com.termux/files/home/OMEGAOPS.AI/genius_c2_agent.py:15:# Set this in your sandbox environment: export ANTHROPIC_API_KEY=[REDACTED]
+/data/data/com.termux/files/home/OMEGAOPS.AI/genius_c2_agent.py:51:        return "ERROR: ANTHROPIC_API_KEY not set in sandbox environment. No reasoning available."
+/data/data/com.termux/files/home/OMEGAOPS.AI/mtb_agent.py:44:    print("Manus-Termux Bridge Agent (Sandbox) Started")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_agent.py:27:  cwd-containment, not airtight path sandboxing — an absolute path outside
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_agent.py.bak.1783926743:27:  cwd-containment, not airtight path sandboxing — an absolute path outside
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_consensus.py:[REDACTED_SECURITY_VALUE]:                (id, transaction_id, wallet_id, event_type, amount, direction,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_consensus.py:[REDACTED_SECURITY_VALUE]:                (%(id)s, %(transaction_id)s, %(wallet_id)s, %(event_type)s,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_consensus.py:[REDACTED_SECURITY_VALUE]:                   event_type, amount::text, direction,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_consensus.py:[REDACTED_SECURITY_VALUE]:                credit_account, memo, event_type="TRANSFER"):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_consensus.py:[REDACTED_SECURITY_VALUE]:                (transaction_id, wallet_id, event_type, amount, direction,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_consensus.py:[REDACTED_SECURITY_VALUE]:            wallet_id, event_type, amount, direction,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_proof_engine.py:50:            WHERE event_type NOT LIKE 'STRESS%%'
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_proof_engine.py:51:              AND event_type NOT LIKE 'OM109_STRESS%%'
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_proof_engine.py:71:                WHERE event_type NOT LIKE 'STRESS%%'
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_proof_engine.py:72:              AND event_type NOT LIKE 'OM109_STRESS%%'
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_proof_engine.py:89:                WHERE event_type NOT LIKE 'STRESS%%'
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_proof_engine.py:90:              AND event_type NOT LIKE 'OM109_STRESS%%'
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_proof_engine.py:[REDACTED_SECURITY_VALUE]:              AND event_type NOT LIKE 'STRESS%%'
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_proof_engine.py:[REDACTED_SECURITY_VALUE]:              AND event_type NOT LIKE 'OM109_STRESS%%'
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_proof_engine.py:[REDACTED_SECURITY_VALUE]:            WHERE event_type NOT LIKE 'STRESS%%'
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_proof_engine.py:[REDACTED_SECURITY_VALUE]:              AND event_type NOT LIKE 'OM109_STRESS%%'
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_provenance_api.py:[REDACTED_SECURITY_VALUE]:        cur.execute("SELECT SUM(amount) FROM ledger_entries WHERE event_type IN ('GENESIS', 'TRANSFER', 'SETTLEMENT')")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_provenance_api.py:[REDACTED_SECURITY_VALUE]:        cur.execute("SELECT event_type, amount, created_at FROM ledger_entries ORDER BY created_at DESC LIMIT 20")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:22:║       → Inbound Lead Receiver (webhooks) → Lead Scoring Gate                   ║
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:25:║       → Stripe Webhook → Auto-Onboarding → CRM → Self-Learning                ║
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    STRIPE_WEBHOOK_SECRET=[REDACTED] "")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    # ── Webhook Server ─────────────────────────────────────────
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    WEBHOOK_HOST        = os.getenv("WEBHOOK_HOST", "0.0.0.0")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    WEBHOOK_PORT        = int(os.getenv("WEBHOOK_PORT", "[REDACTED_SECURITY_VALUE]"))
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    WEBHOOK_SECRET=[REDACTED] "")       # HMAC validation for inbound webhooks
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        ("STRIPE_WEBHOOK_SECRET", WARN,     "Stripe webhook validation (insecure without)"),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        ("WEBHOOK_SECRET",        WARN,     "Inbound webhook HMAC security"),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    if lead.get("source") in ("webhook","inbound","stripe","form"):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:# STRIPE WEBHOOK HANDLER — Auto-onboarding on payment
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    """Validate and process Stripe webhook. Returns result dict."""
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    if Config.STRIPE_WEBHOOK_SECRET:
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:            event = stripe_lib.Webhook.construct_event(
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                payload, sig_header, Config.STRIPE_WEBHOOK_SECRET
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    audit(f"STRIPE_{etype.upper()}", {"event_type": etype})
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:# INBOUND LEAD WEBHOOK (Flask)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:def _verify_webhook_hmac(payload: bytes, provided_sig: str) -> bool:
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    if not Config.WEBHOOK_SECRET=[REDACTED] True  # warn logged at startup
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        Config.WEBHOOK_SECRET.encode(),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        log("warning", "webhook", "Flask not installed — webhook server disabled")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    @app.route("/webhook/lead", methods=["POST"])
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        if Config.WEBHOOK_SECRET and not _verify_webhook_hmac(payload, sig):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        audit("INBOUND_LEAD", {"email": email, "source": "webhook"})
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    @app.route("/webhook/stripe", methods=["POST"])
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    def stripe_webhook():
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    @app.route("/webhook/typeform", methods=["POST"])
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    def typeform_webhook():
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        if Config.WEBHOOK_SECRET and not _verify_webhook_hmac(payload, sig):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:def run_webhook_server(app):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    log("info", "webhook", f"Starting webhook server on {Config.WEBHOOK_HOST}:{Config.WEBHOOK_PORT}")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        app.run(host=Config.WEBHOOK_HOST, port=Config.WEBHOOK_PORT, debug=False, use_reloader=False)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        log("error", "webhook", str(e))
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                    SELECT event_type, amount, direction, memo,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                    WHERE event_type NOT IN ('STRESS_TEST')
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:def _ledger_write(event_type: str, payload: dict):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                event_type,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        log("info", "ledger", f"Posted: {event_type} | ${payload.get('amount_usd', 0):,.2f}")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                SELECT event_type, amount, memo, created_at
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                WHERE event_type NOT IN ('STRESS_TEST')
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                SELECT event_type, payload, created_at
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    sandbox        = next((t for t in treasury if t[0] and "SANDBOX"  in str(t[0])), None)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    sandbox_bal    = f"${float(sandbox[1] or 0):,.2f}"   if sandbox   else "$0"
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        f"  Sandbox Reserve:   {sandbox_bal}\n"
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    # Start webhook server
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        # Start webhook server in background thread
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                target=run_webhook_server,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                name="WebhookServer",
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:            print("  📡 Webhook Server: ONLINE")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:def _pg_ledger_write(event_type, payload, snapshot_id=None):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        memo      = payload.get("memo", event_type)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:            f"{event_type}:{payload.get('email','')}:{amount}:{snapshot_id or ''}".encode()
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                (transaction_id, wallet_id, event_type, amount, direction,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        """, (event_type, max(amount, 0.01), debit, credit, memo, idem_key))
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        log("info", "pg_ledger", f"PG mirror: {event_type} ${amount:.2f}")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:def _safe_ledger_write(event_type: str, payload: dict):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    memo    = payload.get("memo", event_type)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                    f"Transfer BLOCKED by quorum: {event_type} ${amount:.2f}")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:    _ledger_write(event_type, payload)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:        args=(event_type, payload, snapshot_id),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:22:║       → Inbound Lead Receiver (webhooks) → Lead Scoring Gate                   ║
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:25:║       → Stripe Webhook → Auto-Onboarding → CRM → Self-Learning                ║
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    STRIPE_WEBHOOK_SECRET=[REDACTED] "")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    # ── Webhook Server ─────────────────────────────────────────
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    WEBHOOK_HOST        = os.getenv("WEBHOOK_HOST", "0.0.0.0")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    WEBHOOK_PORT        = int(os.getenv("WEBHOOK_PORT", "[REDACTED_SECURITY_VALUE]"))
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    WEBHOOK_SECRET=[REDACTED] "")       # HMAC validation for inbound webhooks
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        ("STRIPE_WEBHOOK_SECRET", WARN,     "Stripe webhook validation (insecure without)"),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        ("WEBHOOK_SECRET",        WARN,     "Inbound webhook HMAC security"),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    if lead.get("source") in ("webhook","inbound","stripe","form"):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:# STRIPE WEBHOOK HANDLER — Auto-onboarding on payment
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    """Validate and process Stripe webhook. Returns result dict."""
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    if Config.STRIPE_WEBHOOK_SECRET:
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:            event = stripe_lib.Webhook.construct_event(
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                payload, sig_header, Config.STRIPE_WEBHOOK_SECRET
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    audit(f"STRIPE_{etype.upper()}", {"event_type": etype})
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:# INBOUND LEAD WEBHOOK (Flask)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:def _verify_webhook_hmac(payload: bytes, provided_sig: str) -> bool:
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    if not Config.WEBHOOK_SECRET=[REDACTED] True  # warn logged at startup
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        Config.WEBHOOK_SECRET.encode(),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        log("warning", "webhook", "Flask not installed — webhook server disabled")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    @app.route("/webhook/lead", methods=["POST"])
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        if Config.WEBHOOK_SECRET and not _verify_webhook_hmac(payload, sig):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        audit("INBOUND_LEAD", {"email": email, "source": "webhook"})
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    @app.route("/webhook/stripe", methods=["POST"])
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    def stripe_webhook():
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    @app.route("/webhook/typeform", methods=["POST"])
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    def typeform_webhook():
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        if Config.WEBHOOK_SECRET and not _verify_webhook_hmac(payload, sig):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:def run_webhook_server(app):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    log("info", "webhook", f"Starting webhook server on {Config.WEBHOOK_HOST}:{Config.WEBHOOK_PORT}")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        app.run(host=Config.WEBHOOK_HOST, port=Config.WEBHOOK_PORT, debug=False, use_reloader=False)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        log("error", "webhook", str(e))
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                    SELECT event_type, amount, direction, memo,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                    WHERE event_type NOT IN ('STRESS_TEST')
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:def _ledger_write(event_type: str, payload: dict):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                event_type,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        log("info", "ledger", f"Posted: {event_type} | ${payload.get('amount_usd', 0):,.2f}")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                SELECT event_type, amount, memo, created_at
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                WHERE event_type NOT IN ('STRESS_TEST')
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                SELECT event_type, payload, created_at
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    sandbox        = next((t for t in treasury if t[0] and "SANDBOX"  in str(t[0])), None)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    sandbox_bal    = f"${float(sandbox[1] or 0):,.2f}"   if sandbox   else "$0"
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        f"  Sandbox Reserve:   {sandbox_bal}\n"
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    # Start webhook server
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        # Start webhook server in background thread
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                target=run_webhook_server,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                name="WebhookServer",
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:            print("  📡 Webhook Server: ONLINE")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:def _pg_ledger_write(event_type, payload, snapshot_id=None):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        memo      = payload.get("memo", event_type)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:            f"{event_type}:{payload.get('email','')}:{amount}:{snapshot_id or ''}".encode()
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                (transaction_id, wallet_id, event_type, amount, direction,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        """, (event_type, max(amount, 0.01), debit, credit, memo, idem_key))
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        log("info", "pg_ledger", f"PG mirror: {event_type} ${amount:.2f}")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:def _safe_ledger_write(event_type: str, payload: dict):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    memo    = payload.get("memo", event_type)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                    f"Transfer BLOCKED by quorum: {event_type} ${amount:.2f}")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:    _ledger_write(event_type, payload)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:        args=(event_type, payload, snapshot_id),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:22:║       → Inbound Lead Receiver (webhooks) → Lead Scoring Gate                   ║
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:25:║       → Stripe Webhook → Auto-Onboarding → CRM → Self-Learning                ║
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    STRIPE_WEBHOOK_SECRET=[REDACTED] "")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    # ── Webhook Server ─────────────────────────────────────────
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    WEBHOOK_HOST        = os.getenv("WEBHOOK_HOST", "0.0.0.0")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    WEBHOOK_PORT        = int(os.getenv("WEBHOOK_PORT", "[REDACTED_SECURITY_VALUE]"))
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    WEBHOOK_SECRET=[REDACTED] "")       # HMAC validation for inbound webhooks
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        ("STRIPE_WEBHOOK_SECRET", WARN,     "Stripe webhook validation (insecure without)"),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        ("WEBHOOK_SECRET",        WARN,     "Inbound webhook HMAC security"),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    if lead.get("source") in ("webhook","inbound","stripe","form"):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:# STRIPE WEBHOOK HANDLER — Auto-onboarding on payment
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    """Validate and process Stripe webhook. Returns result dict."""
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    if Config.STRIPE_WEBHOOK_SECRET:
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:            event = stripe_lib.Webhook.construct_event(
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:                payload, sig_header, Config.STRIPE_WEBHOOK_SECRET
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    audit(f"STRIPE_{etype.upper()}", {"event_type": etype})
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:# INBOUND LEAD WEBHOOK (Flask)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:def _verify_webhook_hmac(payload: bytes, provided_sig: str) -> bool:
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    if not Config.WEBHOOK_SECRET=[REDACTED] True  # warn logged at startup
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        Config.WEBHOOK_SECRET.encode(),
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        log("warning", "webhook", "Flask not installed — webhook server disabled")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    @app.route("/webhook/lead", methods=["POST"])
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        if Config.WEBHOOK_SECRET and not _verify_webhook_hmac(payload, sig):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        audit("INBOUND_LEAD", {"email": email, "source": "webhook"})
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    @app.route("/webhook/stripe", methods=["POST"])
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    def stripe_webhook():
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    @app.route("/webhook/typeform", methods=["POST"])
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    def typeform_webhook():
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        if Config.WEBHOOK_SECRET and not _verify_webhook_hmac(payload, sig):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:def run_webhook_server(app):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    log("info", "webhook", f"Starting webhook server on {Config.WEBHOOK_HOST}:{Config.WEBHOOK_PORT}")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        app.run(host=Config.WEBHOOK_HOST, port=Config.WEBHOOK_PORT, debug=False, use_reloader=False)
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        log("error", "webhook", str(e))
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:                f"✅ Flask (webhooks)" if FLASK_OK else "⚠️ Flask not installed"
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:def _ledger_write(event_type: str, payload: dict):
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:                event_type,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        log("info", "ledger", f"Posted: {event_type} | ${payload.get('amount_usd', 0):,.2f}")
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:    # Start webhook server
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:        # Start webhook server in background thread
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:                target=run_webhook_server,
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:                name="WebhookServer",
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v11.py:[REDACTED_SECURITY_VALUE]:            print("  📡 Webhook Server: ONLINE")
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/B2BPage.jsx:9:  { title: 'API Access Portal', desc: 'Manage API keys and webhook configurations for integrations', icon: ArrowRight, color: '#f97316' },
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/GalleryPage.jsx:6:const API_BASE = 'http://[REDACTED_SECURITY_VALUE].0.0.1:[REDACTED_SECURITY_VALUE]';
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/GalleryPage.jsx:24:  const imgSrc = `${API_BASE}/image/${nft.collectionSlug}/${nft.token_id}`;
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/GalleryPage.jsx:[REDACTED_SECURITY_VALUE]:          const res = await fetch(`${API_BASE}/collection/${c.slug}`);
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/GalleryPage.jsx.bak.20260705_205350:6:const API_BASE = 'http://[REDACTED_SECURITY_VALUE].0.0.1:[REDACTED_SECURITY_VALUE]';
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/GalleryPage.jsx.bak.20260705_205350:32:          const res = await fetch(`${API_BASE}/collection/${c.slug}`);
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/GalleryPage.jsx.bak.20260705_205350:[REDACTED_SECURITY_VALUE]:                  src={`${API_BASE}/image/${nft.collectionSlug}/${nft.token_id}`}
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/GalleryPage.jsx.bak.20260705_205350:[REDACTED_SECURITY_VALUE]:          src={`${API_BASE}/image/${nft.collectionSlug}/${nft.token_id}`}
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/GalleryPage.jsx.bak.20260705_205826:5:const API_BASE = 'http://[REDACTED_SECURITY_VALUE].0.0.1:[REDACTED_SECURITY_VALUE]';
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/GalleryPage.jsx.bak.20260705_205826:31:          const res = await fetch(`${API_BASE}/collection/${c.slug}`);
+/data/data/com.termux/files/home/OMEGAOPS.AI/src/pages/GalleryPage.jsx.bak.20260705_205826:[REDACTED_SECURITY_VALUE]:                    src={`${API_BASE}/image/${nft.collectionSlug}/${nft.token_id}`}
+/data/data/com.termux/files/home/OMEGAOPS.AI/termux_setup.sh:53:Once the agent is running, it will continuously synchronize files with the Manus Sandbox via the GitHub repository.
+/data/data/com.termux/files/home/Omega_Finacial_Network/.gitignore:37:**/settlement_ed25519.pem
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:60:| settlement | `omega_settlement_worker.py` |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:74:  core/settlement/                   # Settlement, clearing, capture engines
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:80:  integrations/stripe/               # Stripe webhooks, subscriptions, billing
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `omega_settlement_worker.py` | settlement |  |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `settlement_worker.py` | settlement |  |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `omega_settlement_engine_v1.py` | versioned | settlement |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `omega_settlement_consensus.py` | python | settlement |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `omega_settlement_contract_v2.py` | versioned | settlement |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `omega_settlement_contracts_v1.py` | versioned | settlement |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `omega_settlement_state_machine_v1.py` | versioned | settlement |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `patch_add_webhook_to_api.py` | patch/fix | stripe |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `webhook_route_patch.py` | python | stripe |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `omega_fix_settlement_binding_v1.py` | versioned | settlement |
+/data/data/com.termux/files/home/Omega_Finacial_Network/SYSTEM_MAP.md:[REDACTED_SECURITY_VALUE]:| `omega_settlement_engine.py` | python | settlement |
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:50:  LIVE: omega_settlement_worker.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:60:  LIVE: settlement_worker.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: apply_webhook_server_patch.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: auth_capture_settlement_engine.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: fix_indent_webhook.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: fix_settlement_queue_retry.sql
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: fix_stripe_webhook_consistency_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: fix_webhook_clean.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: fix_webhook_syntax.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_async_settlement_worker.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_closed_loop_settlement_validator_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_create_settlement_queue.sql
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_external_webhook_replay_validator_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_fix_settlement_binding_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_fix_settlement_queue.sql
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement.json
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_abstraction_engine_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_atomic_gate_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_consensus.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_contract_v2.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_contracts_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_dispute_lifecycle_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_engine.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_engine_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_engine_v1_patch.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_engine_v2.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_engine_v2_patch.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_execution_queue_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_finality_engine.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_finality_lock_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_global_lock_init.sql
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_global_lock_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_hardening_patch_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_idempotency_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_interface_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_interface_v2.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_orchestrator.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_simulator_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_state_init_v1.sql
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_state_machine_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_state_transition_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_validator_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_settlement_validator_v2.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_stripe_webhook_reconciliation_core_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_stripe_webhook_replay_validator_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_stripe_webhook_revenue_intake_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_stripe_webhook_revenue_intake_v2.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_stripe_webhook_server_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_webhook_ingest.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_webhook_patch.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_webhook_server.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: omega_webhook_validation_layer_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: patch_add_webhook_to_api.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: patch_apply_webhook_import.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: patch_webhook_call_fix_v2.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: patch_webhook_raw_body_fix_v1.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: repair_webhook_function.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: run_webhooks.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: sandbox_auth_simulator.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: sandbox_card_engine.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: settlement.log
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: settlement.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: settlement_finality_engine.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: settlement_pipeline_v2.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: settlement_reconciliation_engine.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: stripe_settlement_bridge.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: stripe_webhook_safe_wrapper.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: webhook_route_patch.py
+/data/data/com.termux/files/home/Omega_Finacial_Network/_FREEZE_MANIFEST.txt:[REDACTED_SECURITY_VALUE]:  ARCHIVED: worker_settlement.log
+/data/data/com.termux/files/home/Omega_Finacial_Network/adapters/settlement_adapter.py:1:def settlement_status():
+
+UNSAFE_PRODUCTION_PATTERNS_TO_REVIEW
+/data/data/com.termux/files/home/OMEGAOPS.AI/certify_certs/e8d8fb16cddd5dc0_cert.html:73:        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAagAAAGoAQAAAAA7yUxtAAADwklEQVR4nO1cS47dMAwji9z/yuxCoqy0m2KAjv08yiwmHxMvgiCLouVQ+MLx6yugQQ3qx6EegHEmEBVsFBgXhChCAFUjz7frVtQDhJcIQBRFgXHJ9JQghqs88ny7bkU9AEBk/AiKsBJACiJExE2ukR9g162op53bKxRBiTFB5kwoNGZyvl23orq/hPQOwnGEIqDEfLrjDQfVjwcoV1DJKQjFFEgJngnVRp5v160oyHGjf/gz5Hy7bkU9baJjkg2sqTECThBNNb79DQfVj5oDI1cVvYhDzmHvAR9g162ojK+ou/wPkbXsqeU1IRLZ+XbdioIECKrsFJfIfCbFM4+Kk8lf21DF5yOwgstHmGW5LEZMJcvXd7/hoPpRKiHeFRZS1qDzmVJTpDj64VYUweCAYCqHbHJhEcNkJpr8tRMVGlQIGMQSDOOp2iAtwf4D7LoVxUpKa2YsiddOYvkz9arz7boVVdQvhI5ii0j5KeUPJcsXIA0/3IeikDmp1ky07ibPYK/AJn/tRDm+gCywMqJemqErr6rGzrfrVlSsLzNl+EpU8iqKwywXWNKz59t1KyoiZ2UnwFqHLHW0lCZFpjvfrltRvR6um/JdVUj17PYJdt2KsoQB5AIKUteIx69WHGOGz+9Def1rNdi46pK1jQq+RSLPt+tW1IO13t8cR9/h6sLx5PnNbziov1EqrVAkJcoBlithpiBJQz7FrvtQqIoLtQ5m1/j5H8r98MONqAydd0uN2mJlXa8b4699KMsZWkqHvYMKLtWMmQLi+XbdikqlsCqtrMVKNFz1V9sN8QF23Ypq+x1y4T8WUGJtmYxFzOwKSMzUX/tQXI1PqI0PJcqr7ydCkvlZ/9qIqg5RqpwH4KVJwV4r355v190oMjt4F/2gyGrqYMr1DGn4Y+y6FSW3rOV+FCQhTE+lzhE5TKNHbUS1Jho3rHmbpTva0Aijvv8NB/U6svJacpNLLUsd7untpfP5dt2K+juAkh2i1lBSQmy9HR9g18UoQQKTbpCrlwNiiIvZmAhM/tqNyv3majuH1Ds5nNYy9jjxtRfltsO+G8UUEc5u6Ar95K+dKKqfeuuev5DirOX9DvM9h92o9n0bUYJeikdUXusTHErCcb5dt6Ka3stFAVEnosi27TIGnW/Xraj2fRsAEC10mOYrJXrf4fDDU1AlSYkM9kGQrqA9bQ4/3Il6Xld2jLeBqSKt8Y/JX7tRlqO807J9FyBmRQF+pOGHO1F8T3S9P7v0XwC16yhy3fl23Ypq9dd//61BDeqnoX4DovGwTyrdl18AAAAASUVORK5CYII=" alt="Verification QR" class="qr-img">
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py:[REDACTED_SECURITY_VALUE]:                f"  EXP: {card['expiry']}   CVV: {card['cvv']}\n"
+/data/data/com.termux/files/home/OMEGAOPS.AI/omega_v10.py.bak.1784442820:[REDACTED_SECURITY_VALUE]:                f"  EXP: {card['expiry']}   CVV: {card['cvv']}\n"
+/data/data/com.termux/files/home/OMEGAOPS.AI/package-lock.json:[REDACTED_SECURITY_VALUE]:      "integrity": "sha512-CVvd6FHg1Z3POpBLxO6E6zr+rSKEQ9L6rZHAaY7lLfhKsWYUBBOuMs0e9o24oopj6H+geRCX0YJ+TJLBK2eHyQ==",
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_generator.py:6:def generate_card_number():
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_generator.py:27:        "card_number": generate_card_number(),
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:17:        self.cvv_secret=[REDACTED] # In a real system, this would be loaded securely
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:19:    def _luhn_checksum(self, card_number: str) -> int:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:20:        digits = [int(d) for d in card_number]
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:35:            potential_card_number_base = prefix + random_digits
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:43:            temp_number = potential_card_number_base + '0'
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:48:            card_number = potential_card_number_base + str(luhn_digit)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:51:            if self._luhn_checksum(card_number) == 0:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:52:                return card_number
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:54:    def _generate_cvv(self, card_number: str, expiration_date: datetime.date) -> str:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:55:        message = f"{card_number}-{expiration_date.strftime('%Y%m')}".encode('utf-8')
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:56:        h = hmac.new(self.cvv_secret.encode('utf-8'), message, hashlib.sha256)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:57:        # Take first 3 digits of the hex digest as CVV
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:66:                card_number = self._generate_luhn_number(self.bin_prefix, 16)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:68:                cvv = self._generate_cvv(card_number, expiration_date)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:72:                    INSERT INTO cards (id, wallet_id, card_number, cvv, expiration_date, status, billing_street, billing_city, billing_state, billing_zip, billing_country)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:74:                    RETURNING id, wallet_id, card_number, expiration_date, status, created_at, billing_street, billing_city, billing_state, billing_zip, billing_country
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:75:                """, (card_id, wallet_id, card_number, cvv, expiration_date, 'ACTIVE', '[REDACTED_SECURITY_VALUE] Pennsylvania Ave NW', 'Washington', 'DC', '20001', 'US'))
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:83:                        "card_number_prefix": card_number[:6], # Store prefix for security
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:93:                    "card_number": row[2],
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:    def freeze_card(self, card_number: str, idempotency_key=None):
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:        card = self.get_card_by_number(card_number)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:    def unfreeze_card(self, card_number: str, idempotency_key=None):
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:        card = self.get_card_by_number(card_number)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:    def authorize(self, card_number: str, cvv: str, billing_zip: str, amount: float, merchant: str = "MERCHANT"):
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                    SELECT id, wallet_id, card_number, cvv, status, billing_zip
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                    FROM cards WHERE card_number = %s
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                """, (card_number,))
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                card_id, wallet_id, _pan, db_cvv, status, db_zip = row
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                if db_cvv != cvv:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                    return {"status": "DECLINED", "reason": "INVALID_CVV"}
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                    SELECT id, wallet_id, card_number, expiration_date, status, created_at, updated_at
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                    "card_number": row[2],
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:    def get_card_by_number(self, card_number: str) -> Optional[Dict[str, Any]]:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                    SELECT id, wallet_id, card_number, expiration_date, status, created_at, updated_at
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                    WHERE card_number = %s
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                """, (card_number,))
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer.py:[REDACTED_SECURITY_VALUE]:                    "card_number": row[2],
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:38:        self.cvv_secret=[REDACTED]
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:76:    def _cvv(self, pan: str, exp: datetime.date) -> str:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:78:        return hmac.new(self.cvv_secret.encode(), msg, hashlib.sha256).hexdigest()[:3]
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:96:            "card_number": pan,
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:97:            "cvv": self._cvv(pan, exp),
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:    def get_card(self, card_number: str = None, card_id: str = None) -> Optional[Dict]:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:        if card_number:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:                if c["card_number"] == card_number:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:    def freeze_card(self, card_number: str) -> Dict:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:        card = self.get_card(card_number=card_number)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:    def unfreeze_card(self, card_number: str) -> Dict:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:        card = self.get_card(card_number=card_number)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:    def authorize(self, card_number: str, cvv: str, billing_zip: str, amount: float, merchant: str = "MERCHANT") -> Dict[str, Any]:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:        card = self.get_card(card_number=card_number)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:        if card["cvv"] != cvv:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:            return {"status": "DECLINED", "reason": "INVALID_CVV"}
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:    print(json.dumps(issuer.authorize(card["card_number"], card["cvv"], card["billing_address"]["zip"], 47.50, "OMEGA_STORE"), indent=2))
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_hybrid.py:[REDACTED_SECURITY_VALUE]:    print(json.dumps(issuer.authorize(card["card_number"], card["cvv"], card["billing_address"]["zip"], [REDACTED_SECURITY_VALUE].0), indent=2))
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:18:        self.cvv_secret=[REDACTED]
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:21:    def _luhn_checksum(self, card_number: str) -> int:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:22:        digits = [int(d) for d in card_number]
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:40:            card_number = base + str(luhn_digit)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:41:            if self._luhn_checksum(card_number) == 0:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:42:                return card_number
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:44:    def _generate_cvv(self, card_number: str, expiration_date: datetime.date) -> str:
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:45:        message = f"{card_number}-{expiration_date.strftime('%Y%m')}".encode()
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:46:        h = hmac.new(self.cvv_secret.encode(), message, hashlib.sha256)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:50:        card_number = self._generate_luhn_number(self.bin_prefix)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:53:        cvv = self._generate_cvv(card_number, exp)
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:59:            "card_number": card_number,
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/card_issuer_minimal.py:60:            "cvv": cvv,
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/issued_cards.json:5:    "card_number": "[REDACTED_CARD_NUMBER]",
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/issued_cards.json:6:    "cvv": "[REDACTED_SECURITY_VALUE]",
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/issued_cards.json:24:    "card_number": "[REDACTED_CARD_NUMBER]",
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/issued_cards.json:25:    "cvv": "[REDACTED_SECURITY_VALUE]",
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/omega_virtual_card.py:34:                cvv_hash,
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/omega_virtual_card_sim.py:11:        "card_number": "[REDACTED_SECURITY_VALUE]" + "".join([str(random.randint(0,9)) for _ in range(12)]),
+/data/data/com.termux/files/home/Omega_Finacial_Network/checkpoints_latest/omega_virtual_card_sim.py:13:        "cvv": str(random.randint([REDACTED_SECURITY_VALUE],[REDACTED_SECURITY_VALUE])),
+/data/data/com.termux/files/home/Omega_Finacial_Network/issued_cards.json:5:    "card_number": "[REDACTED_CARD_NUMBER]",
+/data/data/com.termux/files/home/Omega_Finacial_Network/issued_cards.json:6:    "cvv": "81a",
+/data/data/com.termux/files/home/Omega_Finacial_Network/issued_cards.json:29:    "card_number": "[REDACTED_CARD_NUMBER]",
+/data/data/com.termux/files/home/Omega_Finacial_Network/issued_cards.json:30:    "cvv": "[REDACTED_SECURITY_VALUE]",
+/data/data/com.termux/files/home/Omega_Finacial_Network/issued_cards.json:65:    "card_number": "[REDACTED_CARD_NUMBER]",
+/data/data/com.termux/files/home/Omega_Finacial_Network/issued_cards.json:66:    "cvv": "[REDACTED_SECURITY_VALUE]",
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:25:    card_number: str
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:26:    cvv: str
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:84:    full: bool = Query(False, description="Return unmasked PAN/CVV"),
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:97:@app.post("/cards/{card_number}/freeze")
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:98:def freeze(card_number: str):
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:99:    result = _issuer().freeze_card(card_number)
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:[REDACTED_SECURITY_VALUE]:@app.post("/cards/{card_number}/unfreeze")
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:[REDACTED_SECURITY_VALUE]:def unfreeze(card_number: str):
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:[REDACTED_SECURITY_VALUE]:    result = _issuer().unfreeze_card(card_number)
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:[REDACTED_SECURITY_VALUE]:@app.post("/cards/{card_number}/close")
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:[REDACTED_SECURITY_VALUE]:def close(card_number: str):
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:[REDACTED_SECURITY_VALUE]:    result = _issuer().close_card(card_number)
+/data/data/com.termux/files/home/Omega_Finacial_Network/omega_card/api.py:[REDACTED_SECURITY_VALUE]:        card_number=body.card_number,
+
+ADAPTER_VALIDATION
+ADAPTER_MISSING: expected card_program/issuer_adapter.py and test_issuer_adapter.py
+
+DECISION
+No processor is inferred from BIN 485953 or from local simulations.
+Obtain unknown fields from the Celtic-approved onboarding portal or relationship manager.

@@ -1,0 +1,12 @@
+{
+  "processor_name": "Omega",
+  "sandbox_base_url": "https://sandbox.example.invalid/api/v3.6",
+  "api_version": "3.6",
+  "auth_scheme": "bearer",
+  "card_create_endpoint": "/cards",
+  "authorization_endpoint_or_mode": "/authorizations",
+  "provider_idempotency_header": "Idempotency-Key",
+  "webhook_signature_method": "HMAC-SHA256",
+  "webhook_event_names": ["authorization.captured", "refund.created", "settlement.posted"],
+  "approved_regions": ["US"]
+}

@@ -1,0 +1,19 @@
+{
+  "commit": "2d2a41e91936c5085d1f905c59c0fefee51a0c27",
+  "created_at": 1787081924.7485013,
+  "creator": "Thomas Lee Harvey",
+  "files": {
+    "agent/agent_loop.py": "3d91b011caf3c4622e0ef50101c43e94221a2fb734f317d68a79338ac0ad48d7",
+    "agent/mission_autopilot.py": "b31af620299a31928a363610e994602c4af1aea29373bff6e5ee3b8b71635628",
+    "agent/replay_lab.py": "c6c82e4865eaec6dfb212b8275429d866dc66f414dd394c937928bd1259344fb",
+    "agent/shadow_council.py": "5e704235566d2809103ec19806b667865c5475e0ec652e524385273b78ea7f2a",
+    "tests/test_mission_autopilot.py": "1f08293b3f7fa4ef50970a2c294ef91b4e39743e3ae8cd41d18e67375be41cc5",
+    "tests/test_reliability_audit.py": "6481e9347a90dcfc7c3937425aefe1cc922b00eab50a54fdb926d0b93062b29b",
+    "tests/test_replay_lab.py": "fc35ae6d6dae6682909b80cdc2223b521abaa1627dcd24f1d304aa9b3ebf760f",
+    "tests/test_shadow_council.py": "3e1fa7e1a688516edceb540cb64d33d3964ecdf7a182b9e20c97394025423793",
+    "tools/omega_reliability_audit.py": "9851be56e460b36ceca7ab6b57ad030a180c29b579142aca4c35525e0d05855d"
+  },
+  "manifest_sha256": "3baa8ae699a705c7ce4266ef95cf4c4cefe0edd53f6c653ac76f8121096dc7a5",
+  "repository": "git@github.com:tommyleeharvey/omega-agent-v2.git",
+  "schema": "omega-continuity/v1"
+}
