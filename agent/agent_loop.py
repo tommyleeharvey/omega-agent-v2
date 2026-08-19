@@ -113,6 +113,18 @@ TOOLS = [
     {
         "type": "function",
         "function": {
+            "name": "scan_iot_devices",
+            "description": "Scan the local network for connected devices (IP/MAC) and report the agent's own environment (battery, location). Logs a local, gitignored history entry for family-safety tracking.",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "compile_code",
             "description": "Check a Python file compiles cleanly (syntax check).",
             "parameters": {
@@ -286,6 +298,18 @@ async def _execute_tool_call(executor, tool_call):
         args = json.loads(tool_call["function"]["arguments"])
     except json.JSONDecodeError as e:
         return {"error": f"Model sent malformed tool arguments: {e}"}
+
+    if name == "scan_iot_devices":
+        from agent.environment import get_environment_context, check_for_new_devices
+        import os, json, time
+        env = get_environment_context()
+        scan = check_for_new_devices()
+        # local-only, gitignored history — never pushed to the repo
+        hist_path = os.path.expanduser("~/.omega/location_history.jsonl")
+        os.makedirs(os.path.dirname(hist_path), exist_ok=True)
+        with open(hist_path, "a") as f:
+            f.write(json.dumps({"ts": time.time(), "environment": env, "scan": scan}) + "\n")
+        return {"environment": env, "network_scan": scan}
 
     if name == "propose_new_tool":
         # Not a normal dispatch action — runs the full test-gated self-extension

@@ -18,3 +18,5 @@ apply_gemini_key.sh
 finalize_hybrid_brain.sh
 *.env
 build_openrouter_tier.sh
+voice_samples/
+.omega/
