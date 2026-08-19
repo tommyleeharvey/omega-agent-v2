@@ -635,11 +635,25 @@ Return 3-7 steps. Be specific to the actual task.`;
           {/* Input */}
           <div className="px-4 md:px-8 lg:px-12 pb-4 pt-2">
             <LiveActivityBar
-              steps={liveTranscript.map((s, i) => ({
-                id: s.id || i,
-                label: s.title || s.name || s.role || "Working",
-                status: s.status || (isThinking ? "running" : "done"),
-              }))}
+              steps={liveTranscript.map((s, i) => {
+                const toolCall = s.tool_calls?.[0];
+                const toolName = toolCall?.function?.name;
+                const niceLabel =
+                  s.title ||
+                  s.name ||
+                  (toolName === "run_bash" && "Running command") ||
+                  (toolName === "write_file" && "Creating file") ||
+                  (toolName === "edit_file" && "Editing file") ||
+                  (toolName && `Using ${toolName}`) ||
+                  (s.role === "tool" && "Processing result") ||
+                  (s.role === "assistant" && "Thinking") ||
+                  "Working";
+                return {
+                  id: s.id || i,
+                  label: niceLabel,
+                  status: s.status || (isThinking ? "running" : "done"),
+                };
+              })}
               isActive={isThinking}
               onExpand={() => setShowMobileWorkspace(true)}
             />
