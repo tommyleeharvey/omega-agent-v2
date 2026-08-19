@@ -4,11 +4,12 @@ import { stepsFromTranscript } from "@/lib/transcriptAdapter";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Globe, Terminal, FileCode, ListChecks, Loader2, CheckCircle,
-  XCircle, Clock, Search, Brain, Code, Monitor,
+  XCircle, Clock, Search, Brain, Code, Monitor, Target,
 } from "lucide-react";
 import MissionControl from "@/components/omega/MissionControl";
 
 const TABS = [
+  { id: "mission", label: "Mission", icon: Target },
   { id: "actions", label: "Actions", icon: ListChecks },
   { id: "browser", label: "Browser", icon: Globe },
   { id: "terminal", label: "Terminal", icon: Terminal },
@@ -277,7 +278,21 @@ export default function WorkspacePanel({ conversationId, isThinking, onClose, tr
               )}
             </motion.div>
           )}
-        </AnimatePresence>
+        
+            {activeTab === "mission" && (
+              <motion.div key="mission" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                {mission ? (
+                  <MissionControl mission={mission} steps={steps} isThinking={isThinking} />
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <Target className="w-8 h-8 text-white/10 mb-2" />
+                    <p className="text-white/30 text-xs">No mission set</p>
+                    <p className="text-white/15 text-[10px] mt-1">Mission details appear once Omega starts a job</p>
+                  </div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
       </div>
     </div>
   );
