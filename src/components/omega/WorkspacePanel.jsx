@@ -4,15 +4,17 @@ import { stepsFromTranscript } from "@/lib/transcriptAdapter";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Globe, Terminal, FileCode, ListChecks, Loader2, CheckCircle,
-  XCircle, Clock, Search, Brain, Code, Monitor, Target,
+  XCircle, Clock, Search, Brain, Code, Monitor, Target, Blocks,
 } from "lucide-react";
 import MissionControl from "@/components/omega/MissionControl";
+import LedgerView from "@/components/omega/LedgerView";
 
 const TABS = [
   { id: "mission", label: "Mission", icon: Target },
   { id: "actions", label: "Actions", icon: ListChecks },
   { id: "browser", label: "Browser", icon: Globe },
   { id: "terminal", label: "Terminal", icon: Terminal },
+  { id: "ledger", label: "Ledger", icon: Blocks },
   { id: "files", label: "Files", icon: FileCode },
 ];
 
@@ -27,7 +29,7 @@ const TOOL_ICONS = {
 };
 
 export default function WorkspacePanel({ conversationId, isThinking, onClose, transcript, mission }) {
-  const [activeTab, setActiveTab] = useState("actions");
+  const [activeTab, setActiveTab] = useState("mission");
   const [steps, setSteps] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -76,7 +78,7 @@ export default function WorkspacePanel({ conversationId, isThinking, onClose, tr
       <div className="px-3 py-2.5 border-b border-white/5 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2">
           <Monitor className="w-4 h-4 text-teal-400" />
-          <span className="text-white text-sm font-medium">Omega Workspace</span>
+          <span className="text-white text-sm font-medium">Omega's Sandbox</span>
         </div>
         {isThinking && (
           <div className="flex items-center gap-1.5">
@@ -105,7 +107,6 @@ export default function WorkspacePanel({ conversationId, isThinking, onClose, tr
         </div>
       )}
 
-      <MissionControl mission={mission} steps={steps} isThinking={isThinking} />
 
       {/* Tabs */}
       <div className="flex border-b border-white/5 shrink-0">
@@ -290,6 +291,12 @@ export default function WorkspacePanel({ conversationId, isThinking, onClose, tr
                     <p className="text-white/15 text-[10px] mt-1">Mission details appear once Omega starts a job</p>
                   </div>
                 )}
+              </motion.div>
+            )}
+          
+            {activeTab === "ledger" && (
+              <motion.div key="ledger" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <LedgerView steps={steps} proofId={mission?.proofId} isThinking={isThinking} />
               </motion.div>
             )}
           </AnimatePresence>
