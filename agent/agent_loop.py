@@ -516,7 +516,7 @@ def run_agent_task(task_description, max_steps=10, signed_log=None, cwd_hint=Non
                 "step": step, "grounded": grounded, "violations": violations,
             })
             _safe_sign_event(signed_log, event_type="agent_final", data={"step": step, "content": final_content[:1000]})
-                break
+            break
 
             messages.append(message)
             decision_records = []
