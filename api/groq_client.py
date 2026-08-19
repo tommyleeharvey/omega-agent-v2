@@ -9,6 +9,7 @@ import requests
 from api import claude_client
 from api import gemini_client
 from api import cerebras_client
+from api import openrouter_client
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
@@ -165,7 +166,19 @@ def chat_completion(messages, model=None, temperature=0.3, max_tokens=2048,
             )
             return cerebras_result if return_message else cerebras_result.get("content", "")
         except Exception as exc:
-            logger.warning("Cerebras failed; falling through to Groq: %s", exc)
+            logger.warning("Cerebras failed; trying OpenRouter: %s", exc)
+
+    if _tier_start_index == 0 and os.environ.get("OPENROUTER_API_KEY"):
+        try:
+            or_result = openrouter_client.chat_completion(
+                messages,
+                max_tokens=max_tokens,
+                tools=tools,
+                return_message=True,
+            )
+            return or_result if return_message else or_result.get("content", "")
+        except Exception as exc:
+            logger.warning("OpenRouter failed; falling through to Groq: %s", exc)
 
     if not GROQ_API_KEY:
         raise RuntimeError("No model provider is configured: set ANTHROPIC_API_KEY or GROQ_API_KEY")
