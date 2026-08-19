@@ -7,6 +7,7 @@ import logging
 import requests
 
 from api import claude_client
+from api import gemini_client
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
@@ -70,6 +71,24 @@ def _sanitize_messages(messages):
 MAX_CALLS_PER_HOUR = int(os.environ.get("GROQ_MAX_CALLS_PER_HOUR", "120"))
 _call_timestamps = []
 
+# Per-model cooldown cache: model -> epoch time it becomes usable again.
+# When a tier reports a daily-quota (TPD) exhaustion, there is no point
+# retrying it on the next request for the next N minutes - it will just
+# fail again and burn a wasted round trip before falling through. This
+# cache lets the router skip straight past known-exhausted tiers instead,
+# so every request only pays the cost of models actually worth trying.
+_model_cooldowns = {}
+
+def _is_on_cooldown(model):
+    import time as _t
+    resume = _model_cooldowns.get(model)
+    return resume is not None and _t.time() < resume
+
+def _set_cooldown(model, seconds):
+    import time as _t
+    _model_cooldowns[model] = _t.time() + seconds
+    logger.info(f"{model} on cooldown for {seconds:.0f}s (daily quota exhausted)")
+
 
 def _check_rate_guard():
     now = time.time()
@@ -121,7 +140,19 @@ def chat_completion(messages, model=None, temperature=0.3, max_tokens=2048,
             )
             return claude_result if return_message else claude_result.get("content", "")
         except Exception as exc:
-            logger.warning("Claude primary failed; falling through to Groq: %s", exc)
+            logger.warning("Claude failed; trying Gemini: %s", exc)
+
+    if _tier_start_index == 0 and os.environ.get("GEMINI_API_KEY"):
+        try:
+            gemini_result = gemini_client.chat_completion(
+                messages,
+                max_tokens=max_tokens,
+                tools=tools,
+                return_message=True,
+            )
+            return gemini_result if return_message else gemini_result.get("content", "")
+        except Exception as exc:
+            logger.warning("Gemini failed; falling through to Groq: %s", exc)
 
     if not GROQ_API_KEY:
         raise RuntimeError("No model provider is configured: set ANTHROPIC_API_KEY or GROQ_API_KEY")
@@ -144,6 +175,10 @@ def chat_completion(messages, model=None, temperature=0.3, max_tokens=2048,
     last_error = None
     for idx in range(_tier_start_index, len(tier)):
         current_model = tier[idx]
+
+        if _is_on_cooldown(current_model):
+            last_error = f"{current_model}: skipped, on cooldown from earlier daily-quota exhaustion"
+            continue
 
         tpm_limit = MODEL_TPM_LIMITS.get(current_model)
         if tpm_limit is not None:
@@ -202,6 +237,8 @@ def chat_completion(messages, model=None, temperature=0.3, max_tokens=2048,
             wait_match = re.search(r"try again in ([\d.]+)s", resp.text)
             wait_s = float(wait_match.group(1)) if wait_match else None
             is_daily_quota = "tokens per day" in resp.text or "TPD" in resp.text
+            if is_daily_quota and wait_s:
+                _set_cooldown(current_model, wait_s)
             if is_daily_quota or idx < len(tier) - 1:
                 logger.warning(
                     f"{current_model} rate limited"
