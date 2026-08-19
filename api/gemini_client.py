@@ -14,7 +14,11 @@ import requests
 
 logger = logging.getLogger("GeminiClient")
 GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+# gemini-2.5-flash was retired for new API accounts (404: "no longer
+# available to new users"). gemini-3.6-flash is Google's current stable
+# Flash model as of Aug 2026 - use GEMINI_MODEL env var to override without
+# a redeploy if Google moves the goalposts again.
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
 
 
 def _text_from_content(content: Any) -> str:
