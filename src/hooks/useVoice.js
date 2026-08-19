@@ -1,24 +1,37 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 
 /**
- * Uses the browser's built-in speechSynthesis API. No backend call, no
- * model to host — works immediately on any device with a browser voice
- * available. (The earlier /api/tts + Chatterbox path is not in use:
- * Chatterbox was removed from the backend because it OOM'd Render's
- * free-tier build. This is the working replacement, not a cloned voice.)
+ * Uses the browser's built-in speechSynthesis API. Toggle behavior:
+ * tapping Speak on a message starts reading and highlights that button;
+ * tapping it again (or tapping Speak on a different message) stops it.
+ * (Cloned-voice /api/tts path is not in use — see prior notes on Chatterbox
+ * OOM'ing Render free tier. This is speechSynthesis only, not your voice.)
  */
 export function useVoice() {
   const utteranceRef = useRef(null);
+  const [speakingId, setSpeakingId] = useState(null);
 
-  const speakText = useCallback((text) => {
-    if (!text || !("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel(); // stop any prior utterance first
+  const toggleSpeak = useCallback((id, text) => {
+    if (!("speechSynthesis" in window)) return;
+
+    if (speakingId === id) {
+      window.speechSynthesis.cancel();
+      setSpeakingId(null);
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    if (!text) return;
+
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 1;
     utterance.pitch = 1;
+    utterance.onend = () => setSpeakingId(null);
+    utterance.onerror = () => setSpeakingId(null);
     utteranceRef.current = utterance;
+    setSpeakingId(id);
     window.speechSynthesis.speak(utterance);
-  }, []);
+  }, [speakingId]);
 
-  return { speakText };
+  return { toggleSpeak, speakingId };
 }

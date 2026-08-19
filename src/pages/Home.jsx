@@ -50,7 +50,7 @@ const buildMission = async (text, mode, attachments) => {
 };
 
 export default function Home() {
-  const { speakText } = useVoice();
+  const { toggleSpeak, speakingId } = useVoice();
   const [showIntro, setShowIntro] = useState(true);
   const [conversations, setConversations] = useState([]);
   const [activeConversationId, setActiveConversationId] = useState(null);
@@ -624,7 +624,7 @@ Return 3-7 steps. Be specific to the actual task.`;
             ) : (
               <>
                 {messages.map((msg) => (
-                  <MessageBubble key={msg.id} message={msg} onOpenWorkspace={() => setShowMobileWorkspace(true)} onSpeak={speakText} />
+                  <MessageBubble key={msg.id} message={msg} onOpenWorkspace={() => setShowMobileWorkspace(true)} onSpeak={toggleSpeak} isSpeaking={speakingId === msg.id} />
                 ))}
                 {isThinking && <TypingIndicator />}
                 <div ref={messagesEndRef} />

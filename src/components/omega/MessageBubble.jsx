@@ -89,7 +89,7 @@ function MessageMarkdown({ content }) {
   );
 }
 
-export default function MessageBubble({ message, onOpenWorkspace , onSpeak }) {
+export default function MessageBubble({ message, onOpenWorkspace, onSpeak, isSpeaking }) {
   const [showReasoning, setShowReasoning] = useState(false);
   const [showSources, setShowSources] = useState(false);
   const [msgCopied, setMsgCopied] = useState(false);
@@ -174,10 +174,10 @@ export default function MessageBubble({ message, onOpenWorkspace , onSpeak }) {
         </button>
         {onSpeak && !isUser && (
           <button
-            onClick={() => onSpeak(message.content)}
+            onClick={() => onSpeak(message.id, message.content)}
             className="flex items-center gap-1 text-[11px] text-white/25 hover:text-teal-400 transition-colors"
           >
-            <Volume2 className="w-3 h-3" /> Speak
+            <Volume2 className={`w-3 h-3 ${isSpeaking ? "text-teal-400" : ""}`} /> {isSpeaking ? "Stop" : "Speak"}
           </button>
         )}
 
