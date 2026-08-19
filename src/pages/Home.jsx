@@ -10,7 +10,6 @@ import TypingIndicator from "@/components/omega/TypingIndicator";
 import ChatInput from "@/components/omega/ChatInput";
 import WorkspacePanel from "@/components/omega/WorkspacePanel";
 import LiveActivityBar from "@/components/omega/LiveActivityBar";
-import VoiceToggle from "@/components/omega/VoiceToggle";
 import { useVoice } from "@/hooks/useVoice";
 import JobsPanel from "@/components/omega/JobsPanel";
 import MemoryPanel from "@/components/omega/MemoryPanel";
@@ -51,7 +50,7 @@ const buildMission = async (text, mode, attachments) => {
 };
 
 export default function Home() {
-  const { voiceEnabled, setVoicePref, speakText } = useVoice();
+  const { speakText } = useVoice();
   const [showIntro, setShowIntro] = useState(true);
   const [conversations, setConversations] = useState([]);
   const [activeConversationId, setActiveConversationId] = useState(null);
@@ -636,9 +635,6 @@ Return 3-7 steps. Be specific to the actual task.`;
 
           {/* Input */}
           <div className="px-4 md:px-8 lg:px-12 pb-4 pt-2">
-            <div className="flex items-center justify-end mb-1">
-              <VoiceToggle enabled={voiceEnabled} onToggle={setVoicePref} />
-            </div>
             <LiveActivityBar
               steps={liveTranscript.map((s, i) => ({
                 id: s.id || i,

@@ -1,43 +1,24 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 
-const TTS_ENDPOINT =
-  (import.meta.env.VITE_AGENT_BACKEND_URL || "") + "/api/tts";
-
+/**
+ * Uses the browser's built-in speechSynthesis API. No backend call, no
+ * model to host — works immediately on any device with a browser voice
+ * available. (The earlier /api/tts + Chatterbox path is not in use:
+ * Chatterbox was removed from the backend because it OOM'd Render's
+ * free-tier build. This is the working replacement, not a cloned voice.)
+ */
 export function useVoice() {
-  const [voiceEnabled, setVoiceEnabled] = useState(
-    localStorage.getItem("omega_voice_enabled") === "true"
-  );
-  const audioRef = useRef(null);
+  const utteranceRef = useRef(null);
 
-  const setVoicePref = useCallback((val) => {
-    setVoiceEnabled(val);
-    localStorage.setItem("omega_voice_enabled", String(val));
-    if (!val && audioRef.current) {
-      audioRef.current.pause();
-    }
+  const speakText = useCallback((text) => {
+    if (!text || !("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel(); // stop any prior utterance first
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1;
+    utterance.pitch = 1;
+    utteranceRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
   }, []);
 
-  const speakText = useCallback(
-    async (text) => {
-      if (!voiceEnabled || !text) return;
-      try {
-        const res = await fetch(TTS_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text }),
-        });
-        if (!res.ok) return;
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
-        if (audioRef.current) audioRef.current.pause();
-        audioRef.current = new Audio(url);
-        audioRef.current.play();
-      } catch (e) {
-        console.error("TTS playback failed:", e);
-      }
-    },
-    [voiceEnabled]
-  );
-
-  return { voiceEnabled, setVoicePref, speakText };
+  return { speakText };
 }
