@@ -24,12 +24,16 @@ FAST_MODEL = "openai/gpt-oss-20b"  # llama-3.1-8b-instant deprecated Aug 16 2026
 # Tiered fallback stack, in priority order. Each has a separate daily quota
 # on Groq, so if one tier is rate-limited for the day, we fall through to
 # the next rather than blocking on a single model's TPD cap.
+# groq/compound and groq/compound-mini removed: they don't support tool
+# calling, and this agent uses tools on nearly every turn - keeping them in
+# the stack meant every tool-using request that fell past gpt-oss-20b was
+# guaranteed to fail regardless of retries. Now the last tier is gpt-oss-20b,
+# which already gets a wait-and-retry on 429 via the sleep(wait_s) branch
+# below instead of falling into tiers that can never serve the request.
 MODEL_TIER_STACK = [
     "qwen/qwen3.6-27b",
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b",
-    "groq/compound",
-    "groq/compound-mini",
 ]
 
 # Per-model TPM ceilings on our current Groq tier (on_demand). Used to
