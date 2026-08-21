@@ -84,11 +84,41 @@ export const entities = new Proxy({}, {
 
 // --- Real backend call, replacing the old direct-from-browser Groq call ---
 // No API key here — the key lives only on the server now (chat_server.py).
-const AGENT_BACKEND_URL = import.meta.env.VITE_AGENT_BACKEND_URL || "https://omega-agent-backend-v2.onrender.com";
+const PRIMARY_BACKEND_URL = import.meta.env.VITE_AGENT_BACKEND_URL || "https://omegavmchat.share.zrok.io";
+const FALLBACK_BACKEND_URL = "https://omega-agent-backend-v2.onrender.com";
+const HEALTH_TIMEOUT_MS = 2500;
+
+let cachedBackendUrl = null;
+let cachedAt = 0;
+const CACHE_TTL_MS = 30000; // re-check health every 30s, not on every message
+
+const pickBackendUrl = async () => {
+  const now = Date.now();
+  if (cachedBackendUrl && (now - cachedAt) < CACHE_TTL_MS) {
+    return cachedBackendUrl;
+  }
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), HEALTH_TIMEOUT_MS);
+    const res = await fetch(`${PRIMARY_BACKEND_URL}/api/health`, { signal: ctrl.signal });
+    clearTimeout(timer);
+    if (res.ok) {
+      cachedBackendUrl = PRIMARY_BACKEND_URL;
+      cachedAt = now;
+      return cachedBackendUrl;
+    }
+  } catch (_) {
+    // primary unreachable — fall through to backup
+  }
+  cachedBackendUrl = FALLBACK_BACKEND_URL;
+  cachedAt = now;
+  return cachedBackendUrl;
+};
 
 const callAgentBackend = async ({ prompt, images = [] }) => {
   try {
-    const res = await fetch(`${AGENT_BACKEND_URL}/api/chat`, {
+    const backendUrl = await pickBackendUrl();
+    const res = await fetch(`${backendUrl}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: prompt, images }),
