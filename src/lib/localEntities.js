@@ -86,7 +86,7 @@ export const entities = new Proxy({}, {
 // No API key here — the key lives only on the server now (chat_server.py).
 const PRIMARY_BACKEND_URL = import.meta.env.VITE_AGENT_BACKEND_URL || "https://omegavmchat.share.zrok.io";
 const FALLBACK_BACKEND_URL = "https://omega-agent-backend-v2.onrender.com";
-const HEALTH_TIMEOUT_MS = 2500;
+const HEALTH_TIMEOUT_MS = 8000;
 
 let cachedBackendUrl = null;
 let cachedAt = 0;
