@@ -95,45 +95,87 @@ const CACHE_TTL_MS = 30000; // re-check health every 30s, not on every message
 const pickBackendUrl = async () => {
   const now = Date.now();
   if (cachedBackendUrl && (now - cachedAt) < CACHE_TTL_MS) {
+    console.log("[omega-backend] using cached:", cachedBackendUrl);
     return cachedBackendUrl;
   }
+  console.log("[omega-backend] checking primary:", PRIMARY_BACKEND_URL);
   try {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), HEALTH_TIMEOUT_MS);
     const res = await fetch(`${PRIMARY_BACKEND_URL}/api/health`, { signal: ctrl.signal });
     clearTimeout(timer);
+    console.log("[omega-backend] primary health status:", res.status, res.ok);
     if (res.ok) {
       cachedBackendUrl = PRIMARY_BACKEND_URL;
       cachedAt = now;
+      console.log("[omega-backend] SELECTED PRIMARY:", cachedBackendUrl);
       return cachedBackendUrl;
     }
-  } catch (_) {
-    // primary unreachable — fall through to backup
+  } catch (err) {
+    console.log("[omega-backend] primary FAILED:", err.name, err.message);
   }
   cachedBackendUrl = FALLBACK_BACKEND_URL;
   cachedAt = now;
+  console.log("[omega-backend] SELECTED FALLBACK:", cachedBackendUrl);
   return cachedBackendUrl;
 };
 
-const callAgentBackend = async ({ prompt, images = [] }) => {
+const POLL_INTERVAL_MS = 3000;
+const MAX_POLL_ATTEMPTS = 60; // 60 * 3s = 3 minutes ceiling
+
+const callAgentBackend = async ({ prompt, images = [], onProgress }) => {
   try {
     const backendUrl = await pickBackendUrl();
-    const res = await fetch(`${backendUrl}/api/chat`, {
+
+    onProgress?.({ status: "starting" });
+
+    const startRes = await fetch(`${backendUrl}/api/job/start`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: prompt, images }),
     });
 
-    if (!res.ok) {
-      const err = await res.text();
-      return { data: { error: `Agent backend error: ${err}` } };
+    if (!startRes.ok) {
+      const err = await startRes.text();
+      return { data: { error: `Agent backend error (${backendUrl}): ${err}` } };
     }
 
-    const json = await res.json();
-    return { data: { result: json.response, transcript: json.transcript } };
+    const { job_id } = await startRes.json();
+    onProgress?.({ status: "queued", job_id });
+
+    for (let attempt = 0; attempt < MAX_POLL_ATTEMPTS; attempt++) {
+      await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+
+      const pollRes = await fetch(`${backendUrl}/api/job/${job_id}`);
+      if (!pollRes.ok) continue; // transient — keep polling
+
+      const job = await pollRes.json();
+      const lastStep = job.transcript?.[job.transcript.length - 1];
+      const toolName = lastStep?.tool_calls?.[0]?.function?.name;
+
+      onProgress?.({
+        status: job.status,
+        job_id,
+        step: job.transcript?.length ?? 0,
+        current_tool: toolName,
+      });
+
+      if (job.status === "done" || job.status === "failed") {
+        return _finishJob(job);
+      }
+    }
+
+    return { data: { error: `Job ${job_id} did not complete within the poll window.` } };
   } catch (e) {
-    return { data: { error: `Could not reach agent backend at ${AGENT_BACKEND_URL}: ${e.message}` } };
+    return { data: { error: `Agent backend exception: ${e.message}` } };
   }
+};
+
+const _finishJob = (job) => {
+  if (job.status === "failed" || job.error) {
+    return { data: { error: job.message || job.error || "Job failed." } };
+  }
+  return { data: { result: job.response, transcript: job.transcript } };
 };
 
 // Live-streaming path — uses the job/start + job/stream SSE pipeline so the
@@ -142,7 +184,7 @@ const callAgentBackend = async ({ prompt, images = [] }) => {
 const streamAgentBackend = ({ prompt, images = [], onStep }) => {
   return new Promise(async (resolve) => {
     try {
-      const startRes = await fetch(`${AGENT_BACKEND_URL}/api/job/start`, {
+      const startRes = await fetch(`${backendUrl}/api/job/start`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: prompt, images }),
@@ -159,7 +201,7 @@ const streamAgentBackend = ({ prompt, images = [], onStep }) => {
       }
 
       const transcript = [];
-      const es = new EventSource(`${AGENT_BACKEND_URL}/api/job/stream/${job_id}`);
+      const es = new EventSource(`${backendUrl}/api/job/stream/${job_id}`);
 
       es.onmessage = (event) => {
         const step = JSON.parse(event.data);
@@ -180,7 +222,7 @@ const streamAgentBackend = ({ prompt, images = [], onStep }) => {
         resolve({ data: { error: "Lost connection to agent backend stream." } });
       };
     } catch (e) {
-      resolve({ data: { error: `Could not reach agent backend at ${AGENT_BACKEND_URL}: ${e.message}` } });
+      resolve({ data: { error: `Could not reach agent backend at ${backendUrl}: ${e.message}` } });
     }
   });
 };
