@@ -184,6 +184,7 @@ const _finishJob = (job) => {
 const streamAgentBackend = ({ prompt, images = [], onStep }) => {
   return new Promise(async (resolve) => {
     try {
+      const backendUrl = await pickBackendUrl();
       const startRes = await fetch(`${backendUrl}/api/job/start`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
